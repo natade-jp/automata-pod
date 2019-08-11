@@ -13,8 +13,15 @@ fi
 # à¯êîÇë„ì¸
 text=$1
 
+# atr503_m001
 # htsvoice="/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice"
-htsvoice="/usr/share/hts-voice/mei/mei_normal.htsvoice"
+
+# mei
+# htsvoice="/usr/share/hts-voice/mei/mei_normal.htsvoice"
+
+# tohoku-f01
+htsvoice="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
+
 jdic="/var/lib/mecab/dic/open-jtalk/naist-jdic"
 wavfile="./test.wav"
 
