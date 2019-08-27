@@ -1,5 +1,13 @@
 #!/bin/sh
 
+# フォルダ構成
+# pi
+#  automata-pod
+#   main
+#  julius
+#   dictation-kit-4.5
+#   julius-4.5
+
 # apt-get を更新
 sudo apt-get -y update
 
