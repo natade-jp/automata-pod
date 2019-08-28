@@ -40,9 +40,6 @@ rm -r ./hts-voice
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# 音声いろいろツール
-sudo apt-get install -y alsa-utils sox libsox-fmt-all
-
 # Julius
 cd ~
 sudo apt-get install -y osspd-alsa libasound2-dev libesd0-dev libsndfile1-dev
@@ -59,4 +56,7 @@ sudo make install
 cd ../
 wget https://osdn.net/dl/julius/dictation-kit-4.5.zip
 unzip dictation-kit-4.5.zip
+
+# soxの利用
+sudo apt-get install -y alsa-utils sox libsox-fmt-all
 

@@ -23,8 +23,18 @@ text=$1
 htsvoice="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
 
 jdic="/var/lib/mecab/dic/open-jtalk/naist-jdic"
-wavfile="./test.wav"
+wavfile="./talkdata.wav"
+deviceid="0"
+volume="60%"
 
+# wavファイルを作成
 echo "${text}" | open_jtalk -m "${htsvoice}" -x "${jdic}" -ow "${wavfile}"
-aplay "${wavfile}"
 
+# 音量調整
+amixer sset PCM ${volume} -c${deviceid}
+
+# 再生する
+aplay -D plughw:${deviceid} "${wavfile}"
+
+# 消去する
+rm ${wavfile}
