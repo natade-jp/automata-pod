@@ -20,7 +20,7 @@ do
 	./3-voice-record.sh
 	if [ -f "./voice-record.flac" ]; then
 		./1-text-to-speech.sh "はい"
-		./4-speech-to-text-api.js
+		./4-speech-to-text.sh
 		text=`cat ./speech-to-text.txt`
 		./1-text-to-speech.sh ${text}
 	else

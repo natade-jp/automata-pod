@@ -43,6 +43,9 @@ rm -r ./hts-voice
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
+# パッケージ
+npm install
+
 # Julius
 cd ~
 sudo apt-get install -y osspd-alsa libasound2-dev libesd0-dev libsndfile1-dev
