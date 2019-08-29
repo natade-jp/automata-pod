@@ -25,7 +25,11 @@ htsvoice="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
 jdic="/var/lib/mecab/dic/open-jtalk/naist-jdic"
 wavfile="./talkdata.wav"
 deviceid="0"
-volume="60%"
+volume="80%"
+effect="tempo 1.05 echo 1.0 0.75 100 0.3"
+
+# 出力
+speaker="alsa plughw:${deviceid}"
 
 # wavファイルを作成
 echo "${text}" | open_jtalk -m "${htsvoice}" -x "${jdic}" -ow "${wavfile}"
@@ -34,7 +38,8 @@ echo "${text}" | open_jtalk -m "${htsvoice}" -x "${jdic}" -ow "${wavfile}"
 amixer sset PCM ${volume} -c${deviceid}
 
 # 再生する
-aplay -D plughw:${deviceid} "${wavfile}"
+sox "${wavfile}" -t ${speaker} ${effect} > /dev/null 2>&1
 
 # 消去する
 rm ${wavfile}
+
