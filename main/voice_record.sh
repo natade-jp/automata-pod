@@ -35,7 +35,7 @@ pklev=`echo ${getstats} | grep -oE "Pk lev dB [-0-9.]+" | grep -oE "[-0-9.]+"`
 
 # 録音する
 silence_db=`echo "${pklev} + 5" | bc`
-getvoise_command="sox -c 1 -r ${fs} -t ${input_dev} ${file_name} trim 0 ${max_sec} silence 0 1 ${muon_sec} ${silence_db}d"
+getvoise_command="sox -c 1 -r ${fs} -t ${input_dev} -r ${fs} ${file_name} trim 0 ${max_sec} silence 0 1 ${muon_sec} ${silence_db}d"
 getvoise="$(${getvoise_command} 2>&1 > /dev/null)"
 rec_length=`echo "${getvoise}" | grep -oE "[0-9]{2}\.[0-9]{2} " | tail -n 1`
 
