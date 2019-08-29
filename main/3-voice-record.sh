@@ -23,6 +23,10 @@ fs="16000"
 # 出力ファイル
 file_name="voice-record.flac"
 
+if [ -f "${file_name}" ]; then
+	rm "${file_name}"
+fi
+
 # 入力
 input_dev="alsa plughw:${deviceid}"
 
@@ -43,7 +47,7 @@ rec_length=`echo "${getvoise}" | grep -oE "[0-9]{2}\.[0-9]{2} " | tail -n 1`
 is_success=`echo "${muon_sec} + 0.5 < ${rec_length}" | bc`
 if [ ${is_success} = 0 ]; then
 	echo "失敗"
-	rm ${file_name}
+	rm "${file_name}"
 else
 	echo "録音成功"
 fi

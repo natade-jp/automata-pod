@@ -10,4 +10,11 @@ if test $pid != `pgrep -fo "${filepath}"` ; then
 	return 1
 fi
 
+# 出力ファイル
+file_name="speech-to-text.txt"
+
+if [ -f "${file_name}" ]; then
+	rm "${file_name}"
+fi
+
 node ./4-speech-to-text.js
