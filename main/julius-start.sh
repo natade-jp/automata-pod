@@ -4,7 +4,7 @@
 # https://qiita.com/fishkiller/items/c6c5c4dcd9bb8184e484
 
 AMGMM=~/julius/dictation-kit-4.5/am-gmm.jconf
-GRAM=./dict/hello
+GRAM=./dict/pod
 
 export ALSADEV="plughw:1,0"
 julius -C ${AMGMM} -nostrip -gram ${GRAM} -module > /dev/null &

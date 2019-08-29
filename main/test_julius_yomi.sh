@@ -1,7 +1,7 @@
 #!/bin/sh
 
-YOMI=./dict/hello.yomi
-PHONE=./dict/hello.phone
+YOMI=./dict/pod.yomi
+PHONE=./dict/pod.phone
 yomi2voca.pl ${YOMI} > ${PHONE}
 
-# mkdfa.pl ./dict/hello
+# mkdfa.pl ./dict/pod
