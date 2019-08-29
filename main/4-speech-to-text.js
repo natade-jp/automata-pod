@@ -1,6 +1,9 @@
 ﻿// 参考
 // https://cloud.google.com/speech-to-text/docs/sync-recognize#speech-sync-recognize-nodejs
 // https://github.com/googleapis/nodejs-speech/issues/309
+// 
+// 以下で実行する
+// node ./4-speech-to-text.js
 
 // Imports the Google Cloud client library
 const fs = require('fs');

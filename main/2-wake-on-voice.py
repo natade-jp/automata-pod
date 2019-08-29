@@ -14,6 +14,7 @@ import random
 import numpy as np
 from numpy.random import *
 import time
+import sys
 
 host = '127.0.0.1' #localhost
 port = 10500   #julisuサーバーモードのポート
@@ -38,8 +39,8 @@ def main():
 						line = line[index+6:line.find('"',index+6)]
 					
 					if line == 'ポッド':
-						print(line)
 						print('OK')
+						sys.exit()
 					
 					elif line == 'こんにちは':
 						print(line)
