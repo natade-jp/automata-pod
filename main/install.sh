@@ -15,6 +15,9 @@ sudo apt-get -y update
 sudo apt-get install -y xdg-user-dirs-gtk
 LANG=C xdg-user-dirs-update --force
 
+# 計算用
+sudo apt-get install -y bc
+
 # Open-JDK をインストール
 sudo apt-get install -y open-jtalk
 sudo apt-get install -y open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001
