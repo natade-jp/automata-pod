@@ -23,7 +23,7 @@ text=$1
 htsvoice="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
 
 jdic="/var/lib/mecab/dic/open-jtalk/naist-jdic"
-wavfile="./talkdata.wav"
+wavfile="./text-to-speech.wav"
 deviceid="0"
 volume="80%"
 effect="tempo 1.05 echo 1.0 0.75 100 0.3"

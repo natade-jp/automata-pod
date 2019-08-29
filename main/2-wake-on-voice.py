@@ -4,7 +4,7 @@
 # https://qiita.com/fishkiller/items/c6c5c4dcd9bb8184e484
 #
 # 以下で実行する
-# python3 ./voice.py
+# python3 ./2-wake-on-voice.py
 
 import subprocess
 import socket
@@ -20,7 +20,7 @@ port = 10500   #julisuサーバーモードのポート
 
 def main():
 
-	p = subprocess.Popen(["./julius-start.sh"], stdout=subprocess.PIPE, shell=True) # julius起動スクリプトを実行
+	p = subprocess.Popen(["./2-wake-on-voice-julius-start.sh"], stdout=subprocess.PIPE, shell=True) # julius起動スクリプトを実行
 	pid = str(p.stdout.read().decode('utf-8')) # juliusのプロセスIDを取得
 	time.sleep(3) # 3秒間スリープ
 	client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -37,8 +37,9 @@ def main():
 					if index != -1:
 						line = line[index+6:line.find('"',index+6)]
 					
-					if line == 'おはよう':
+					if line == 'ポッド':
 						print(line)
+						print('OK')
 					
 					elif line == 'こんにちは':
 						print(line)

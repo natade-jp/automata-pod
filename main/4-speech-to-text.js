@@ -5,14 +5,14 @@
 // Imports the Google Cloud client library
 const fs = require('fs');
 const speech = require('@google-cloud/speech');
-const api = require('./api');
+const api = require('./4-speech-to-text-api.js');
 const file = require('./lib/File');
-const output = "./transcription.txt";
+const output = "./speech-to-text.txt";
 
 // 以下から取得
 // https://console.cloud.google.com/apis/dashboard
 // https://console.cloud.google.com/apis/credentials
-//	api.js
+//	4-speech-to-text-api.js
 //	const API = {
 //		projectId: '...',
 //		keyFilename: '...'
@@ -24,7 +24,7 @@ async function main() {
 	// Creates a client
 	const client = new speech.SpeechClient(api);
 
-	const filename = './rec.flac';
+	const filename = './voice-record.flac';
 	const encoding = 'FLAC';
 	const sampleRateHertz = 16000;
 	const languageCode = 'ja-JP';

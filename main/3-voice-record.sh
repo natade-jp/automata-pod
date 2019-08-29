@@ -21,7 +21,7 @@ muon_sec="2.5"
 # サンプリング周波数
 fs="16000"
 # 出力ファイル
-file_name="rec.flac"
+file_name="voice-record.flac"
 
 # 入力
 input_dev="alsa plughw:${deviceid}"
