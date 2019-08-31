@@ -239,6 +239,33 @@ class File {
 		return target_list;
 	}
 
+	/**
+	 * 環境ファイルの定義値をJSONで取得する
+	 * @param {String} path 
+	 * @return {Object}
+	 */
+	static getEnvironmentFile(path) {
+		const text = File.loadTextFile(path).split(/\r?\n/g);
+		const output = {};
+		for(let i = 0; i < text.length; i++) {
+			let line = text[i];
+			line = line.replace(/#.*/, "").trim();
+			if(line.length === 0) {
+				continue;
+			}
+			if(!/=/.test(line)) {
+				continue;
+			}
+			const parm = line.replace(/=.*/, "").trim();
+			let data = line.replace(/[^=]+=/, "").trim();
+			if(/^".*"$/.test(data)) {
+				data = data.replace(/^"(.*)"$/, "$1");
+			}
+			output[parm] = data;
+		}
+		return output;
+	}
+
 }
 
 module.exports = File;

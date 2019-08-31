@@ -10,9 +10,6 @@ import subprocess
 import socket
 import string
 import os
-import random
-import numpy as np
-from numpy.random import *
 import time
 import sys
 
@@ -23,7 +20,7 @@ def main():
 
 	p = subprocess.Popen(["./2-wake-on-voice-julius-start.sh"], stdout=subprocess.PIPE, shell=True) # julius起動スクリプトを実行
 	pid = str(p.stdout.read().decode('utf-8')) # juliusのプロセスIDを取得
-	time.sleep(3) # 3秒間スリープ
+	time.sleep(1) # 1秒間スリープ
 	client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 	client.connect((host, port)) #サーバーモードで起動したjuliusに接続
 

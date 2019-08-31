@@ -15,6 +15,9 @@ sudo apt-get -y update
 sudo apt-get install -y xdg-user-dirs-gtk
 LANG=C xdg-user-dirs-update --force
 
+# sleep用
+sudo apt-get install -y sleepenh
+
 # 計算用
 sudo apt-get install -y bc
 

@@ -11,35 +11,22 @@ if test $pid != `pgrep -fo "${filepath}"` ; then
 fi
 
 # 引数を代入
-text=$1
+INPUT_TEXT=$1
 
-# atr503_m001
-# htsvoice="/usr/share/hts-voice/nitech-jp-atr503-m001/nitech_jp_atr503_m001.htsvoice"
-
-# mei
-# htsvoice="/usr/share/hts-voice/mei/mei_normal.htsvoice"
-
-# tohoku-f01
-htsvoice="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
-
-jdic="/var/lib/mecab/dic/open-jtalk/naist-jdic"
-wavfile="./text-to-speech.wav"
-deviceid="0"
-volume="80%"
-effect="tempo 1.05 echo 1.0 0.75 100 0.3"
+# 変数を取得
+. ./environment.sh
 
 # 出力
-speaker="alsa plughw:${deviceid}"
+OUTPUT="alsa plughw:${DEV_ID_PLAY}"
 
 # wavファイルを作成
-echo "${text}" | open_jtalk -m "${htsvoice}" -x "${jdic}" -ow "${wavfile}"
+echo "${INPUT_TEXT}" | open_jtalk -m "${TALK_HTS}" -x "${TALK_JDIC}" -ow "${TALK_FILE}"
 
 # 音量調整
-amixer sset PCM ${volume} -c${deviceid}
+amixer sset PCM ${VOL_SPEAKER} -c${DEV_ID_PLAY} > /dev/null 2>&1
 
 # 再生する
-sox "${wavfile}" -t ${speaker} ${effect} > /dev/null 2>&1
+sox "${TALK_FILE}" -t ${OUTPUT} ${TALK_EFFECT} > /dev/null 2>&1
 
 # 消去する
-rm ${wavfile}
-
+rm ${TALK_FILE}

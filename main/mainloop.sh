@@ -14,7 +14,6 @@ fi
 
 while :
 do
-	killall julius
 	./2-wake-on-voice.sh
 	./1-text-to-speech.sh "ご用件をどうぞ"
 	./3-voice-record.sh
@@ -26,6 +25,5 @@ do
 	else
 		./1-text-to-speech.sh "声がよく聞こえませんでした。"
 	fi
-	sleep 1
 done
 
