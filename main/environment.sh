@@ -6,7 +6,7 @@ DEV_ID_REC="1"
 
 # ボリューム
 VOL_SPEAKER="80%"
-VOL_MIC=""
+VOL_MIC="100%"
 
 # open_jtalk用
 # atr503_m001

@@ -34,6 +34,6 @@ process.on('uncaughtException', function (err) {
 
 // Ctrl + C
 process.on('SIGINT', function() {
-	require('child_process').execSync('killall julius');
+	require('child_process').execSync('killall julius > /dev/null');
 	process.exit();
 });

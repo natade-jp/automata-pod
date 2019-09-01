@@ -13,6 +13,9 @@ fi
 # 変数を取得
 . ./environment.sh
 
+# 音量調整
+amixer sset PCM ${VOL_MIC} -c${DEV_ID_REC} > /dev/null 2>&1
+
 # すでにファイルがある場合は削除する
 if [ -f "${RECOGNIZE_FILE}" ]; then
 	rm "${RECOGNIZE_FILE}"
