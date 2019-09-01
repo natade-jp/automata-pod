@@ -22,10 +22,11 @@ if [ ${PID} -ne 0 ] ; then
 	killall julius > /dev/null
 fi
 
-# バッググラウンドで起動
+# デバイスを指定
 export ALSADEV="plughw:${DEV_ID_REC}"
+
+# バッググラウンドで起動
 julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -module > /dev/null &
-PID=$!
 
 # 起動するまで待つ
 while :

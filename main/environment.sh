@@ -20,8 +20,9 @@ TALK_FILE="./text-to-speech.wav"
 TALK_EFFECT="tempo 1.05 echo 1.0 0.75 100 0.3"
 
 # julius用
+JULIUS_MAIN=~/julius/dictation-kit-4.5/main.jconf
 JULIUS_AMGMM=~/julius/dictation-kit-4.5/am-gmm.jconf
-JULIUS_GRAM="./dict/pod"
+JULIUS_GRAM="./dict/pod/pod"
 
 # google 音声認識用
 RECOGNIZE_FILE="voice-record.flac"
