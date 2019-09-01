@@ -30,10 +30,10 @@ client.on('close', function(){
 // エラー発生時
 process.on('uncaughtException', function (err) {
     console.log(err.errno);
+	process.exit();
 });
 
 // Ctrl + C
 process.on('SIGINT', function() {
-	require('child_process').execSync('killall julius > /dev/null');
 	process.exit();
 });
