@@ -7,6 +7,9 @@
 #  julius
 #   dictation-kit-4.5
 #   julius-4.5
+#  mecab
+#   mecab-0.996
+#   mecab-ipadic-2.7.0-20070801
 
 # apt-get を更新
 sudo apt-get -y update
@@ -68,4 +71,27 @@ unzip dictation-kit-4.5.zip
 
 # soxの利用
 sudo apt-get install -y alsa-utils sox libsox-fmt-all
+
+# MeCab (apt-get でインストールすると文字化けするので自分でインストールする)
+cd ~
+mkdir mecab
+cd mecab
+wget -O mecab-0.996.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE"
+tar xvzf mecab-0.996.tar.gz
+cd mecab-0.996
+./configure --with-charset=utf8 --enable-utf8-only
+make
+make check
+sudo make install
+
+# MeCab 用の辞書 IPA 辞書
+cd ../
+wget -O mecab-ipadic-2.7.0-20070801.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
+tar xvzf mecab-ipadic-2.7.0-20070801.tar.gz
+cd mecab-ipadic-2.7.0-20070801
+./configure --with-charset=utf8 --enable-utf8-only
+make
+sudo make install
+# 以降以下で、実行可能
+# mecab -d /usr/local/lib/mecab/dic/ipadic
 

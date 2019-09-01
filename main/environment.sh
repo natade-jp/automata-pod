@@ -38,3 +38,6 @@ RECOGNIZE_LANG="ja-JP"
 RECOGNIZE_API_KEY="./GOOGLE_APPLICATION_CREDENTIALS.json"
 RECOGNIZE_RESULT="speech-to-text.txt"
 
+# mecab
+MECAB_RUN="mecab -d /usr/local/lib/mecab/dic/ipadic"
+
