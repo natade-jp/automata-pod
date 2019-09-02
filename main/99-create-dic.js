@@ -75,20 +75,29 @@ const main = async() => {
 				continue;
 			}
 
-			// 文法（文）データ
+			// 文法（オートマトン）データ
 			// 例 $文 → $日付 $の $天気 $聞く
-			if(/^\$文\s*→/.test(line)) {
+			// $文 と書いてある場合は、終わりと終了がある
+			// $は変数を表す
+			if( /^\$文\s*→/.test(line) || /$[^ |]+\s*→\s*([^ |]+ +){2,}/.test(line) ) {
+				const name = line.replace(/\s*→.*/, "").trim();
 				const data = line.replace(/.*→/, "").trim();
-				tango_list = data.split(/\s+/);
-				load_bunpou.push(tango_list);
+				const automaton = data.split(/\s+/);
+				load_bunpou.push(
+					{
+						name : name,
+						automaton : automaton
+					}
+				);
 			}
 
 			// 文法（単語集合）データ
 			// 例 $日付 → 今日 | 明日 | 明後日
+			// 1つの変数に対して、読み方を記載する。
 			else if(/^\$[^ \t]+\s*→/.test(line)) {
 				const name = line.replace(/\s*→.*/, "").trim();
 				const data = line.replace(/.*→/, "").trim();
-				word_list = data.split(/\s*\|\s*/);
+				const word_list = data.split(/\s*\|\s*/);
 				load_tango.push(
 					{
 						name : name,
@@ -97,8 +106,9 @@ const main = async() => {
 				);
 			}
 
-			// 読みデータ
+			// 読みデータ(*.yomi)
 			// 例 こんにちは こんにちわ
+			// MeCabでは変換できない場合に利用する
 			else if(/^[^#]+[ \t]+[^#]+$/.test(line)) {
 				const word = line.replace(/[ \t]+[^#]+/, "").trim();
 				const yomi_text = line.replace(/[^#]+[ \t]+/, "").trim();
@@ -145,19 +155,44 @@ const main = async() => {
 
 		// オートマトンによる文法を作成
 		for(const key in load_bunpou) {
-			const word_list = load_bunpou[key];
-			let grammar_line = "S: NS_B ";
-			for(const word_key in word_list) {
-				const word = word_list[word_key].replace(/\$/g, "");
+			const bunpou = load_bunpou[key];
+			const is_bun = bunpou.name === "$文";
+			let grammar_line = null;
+
+			// 左の部分
+			if(is_bun) {
+				// 文の場合は終端が必要
+				grammar_line = "S: NS_B";
+			}
+			else {
+				const word = bunpou.name.replace(/\$/g, "");
+				if(!yomi_hash[word]) {
+					yomi_hash[word] = await parseFormat(word);
+				}
+				grammar_line = "VAR_" + yomi_hash[word].yomi + ":"
+			}
+
+			// 右の部分を作成
+			for(const word_key in bunpou.automaton) {
+				let is_var = false;
+				let word = bunpou.automaton[word_key];
+				if(/^\$/.test(word)) {
+					is_var = true;
+					word = word.replace(/\$/g, "");
+				}
 				let parse_name = null;
 				// すでにデータがあるならハッシュを使う
 				if(!yomi_hash[word]) {
 					yomi_hash[word] = await parseFormat(word);
 				}
 				parse_name = yomi_hash[word];
-				grammar_line += parse_name.yomi + " ";
+				grammar_line += (is_var ? " VAR_" : " ") + parse_name.yomi;
 			}
-			grammar_line += "NS_E";
+			
+			if(is_bun) {
+				grammar_line += " NS_E";
+			}
+			
 			grammar.push(grammar_line);
 		}
 
@@ -171,7 +206,7 @@ const main = async() => {
 				yomi_hash[word] = await parseFormat(word);
 			}
 			parse_name = yomi_hash[word];
-			let grammar_line = parse_name.romaji + ":";
+			let grammar_line = "VAR_" + parse_name.yomi + ":";
 			for(const word_key in tango_list.word_list) {
 				const word = tango_list.word_list[word_key];
 				if(!yomi_hash[word]) {
