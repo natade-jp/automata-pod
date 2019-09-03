@@ -24,27 +24,6 @@ MeCab.command = env["MECAB_RUN"];
  */
 
 /**
- * parseFormat の結果から読みを取得する
- * @param {Morphs[]} morphs 
- * @param {{hiragana : string, romaji : string}}
- */
-const getYomiData = function(morphs) {
-	let reading = ""
-	for(let i = 0; i < morphs.length; i++) {
-		const morph = morphs[i];
-		reading += morph.reading
-	}
-	const hiragana = MojiJS.toHiragana(reading).replace(/[？！。、]/g , "");
-	const voca = yomi2voca(hiragana);
-	return {
-		hiragana : hiragana,
-		voca : voca,
-		romaji : MojiJS.toRomajiFromHiragana(hiragana).toUpperCase(),
-		yomi : voca.replace(/ /g , "").toUpperCase()
-	};
-}
-
-/**
  * Mecabを使用してテキストを解析する
  * 非同期処理を同期処理へ置き換える
  * @param {string} text 
@@ -53,7 +32,12 @@ const getYomiData = function(morphs) {
 const parseFormat = (text) => {
 	return new Promise((resolve, reject) => {
 		MeCab.parseFormat(text, (err, morphs) => {
-			resolve(getYomiData(morphs));
+			let reading = ""
+			for(let i = 0; i < morphs.length; i++) {
+				const morph = morphs[i];
+				reading += morph.reading
+			}
+			resolve(reading);
 		});
 	});
 }
@@ -122,20 +106,46 @@ const main = async() => {
 		}
 	}
 
-	// 読みデータを整形
-	// 読みデータがある場合は読みデータを優先させる。
 	const yomi_hash = {};
-	{
-		for(const key in load_yomi) {
-			const hash_key = load_yomi[key].word;
-			const hiragana = MojiJS.toHiragana(load_yomi[key].yomi).replace(/[？！。、]/g , "");
+
+	const getYomiData = async(text, def_reading) => {
+		let word = text;
+		let is_notvar = /^[^$]/.test(word);
+		if(!is_notvar) {
+			word = word.replace(/\$/g, "");
+		}
+		// すでにデータがあるならハッシュを使う
+		if(!yomi_hash[word]) {
+			let reading = null;
+			if(def_reading !== undefined) {
+				reading = def_reading;
+			}
+			else {
+				reading = await parseFormat(word);
+			}
+			const hiragana = MojiJS.toHiragana(reading).replace(/[？！。、]/g , "");
 			const voca = yomi2voca(hiragana);
-			yomi_hash[hash_key] = {
+			const romaji = MojiJS.toRomajiFromHiragana(hiragana).toUpperCase();
+			const yomi = voca.replace(/ /g , "").toUpperCase();
+			yomi_hash[word] = {
 				hiragana : hiragana,
 				voca : voca,
-				romaji : MojiJS.toRomajiFromHiragana(hiragana).toUpperCase(),
-				yomi : voca.replace(/ /g , "").toUpperCase()
+				romaji : romaji,
+				yomi : yomi,
+				is_notvar : false
 			}
+		}
+		// 変数以外に利用されている（読みとして）
+		yomi_hash[word].is_notvar |= is_notvar;
+		const ret = (is_notvar ? "" : "VAR_") + yomi_hash[word].yomi;
+		return ret;
+	}
+	
+	// 読みデータを整形
+	// 読みデータがある場合は読みデータを優先させる。
+	{
+		for(const key in load_yomi) {
+			getYomiData(load_yomi[key].word, load_yomi[key].yomi);
 		}
 	}
 
@@ -158,72 +168,37 @@ const main = async() => {
 			const bunpou = load_bunpou[key];
 			const is_bun = bunpou.name === "$文";
 			let grammar_line = null;
-
 			// 左の部分
 			if(is_bun) {
 				// 文の場合は終端が必要
 				grammar_line = "S: NS_B";
 			}
 			else {
-				const word = bunpou.name.replace(/\$/g, "");
-				if(!yomi_hash[word]) {
-					yomi_hash[word] = await parseFormat(word);
-				}
-				grammar_line = "VAR_" + yomi_hash[word].yomi + ":"
+				grammar_line = await getYomiData(bunpou.name) + ":"
 			}
-
 			// 右の部分を作成
 			for(const word_key in bunpou.automaton) {
-				let is_var = false;
-				let word = bunpou.automaton[word_key];
-				if(/^\$/.test(word)) {
-					is_var = true;
-					word = word.replace(/\$/g, "");
-				}
-				let parse_name = null;
-				// すでにデータがあるならハッシュを使う
-				if(!yomi_hash[word]) {
-					yomi_hash[word] = await parseFormat(word);
-				}
-				parse_name = yomi_hash[word];
-				grammar_line += (is_var ? " VAR_" : " ") + parse_name.yomi;
+				grammar_line += " " + await getYomiData(bunpou.automaton[word_key]);
 			}
-			
 			if(is_bun) {
 				grammar_line += " NS_E";
 			}
-			
 			grammar.push(grammar_line);
 		}
 
 		// ワードを作成
 		for(const key in load_tango) {
 			const tango_list = load_tango[key];
-			const word = tango_list.name.replace(/\$/g, "");
-			let parse_name = null;
-			// すでにデータがあるならハッシュを使う
-			if(!yomi_hash[word]) {
-				yomi_hash[word] = await parseFormat(word);
-			}
-			parse_name = yomi_hash[word];
-			let grammar_line = "VAR_" + parse_name.yomi + ":";
+			let grammar_line = await getYomiData(tango_list.name) + ":";
 			for(const word_key in tango_list.word_list) {
-				const word = tango_list.word_list[word_key];
-				if(!yomi_hash[word]) {
-					yomi_hash[word] = await parseFormat(word);
-				}
-				const yomi = yomi_hash[word];
-				grammar_line += " " + yomi.yomi;
+				grammar_line += " " + await getYomiData(tango_list.word_list[word_key]);
 			}
 			grammar.push(grammar_line);
 		}
 
 		console.log(grammar.join("\n"));
-
 	}
 
-
-	
 }
 
 main();
