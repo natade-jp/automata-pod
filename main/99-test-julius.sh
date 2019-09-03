@@ -10,4 +10,4 @@ amixer sset PCM ${VOL_MIC} -c${DEV_ID_REC} > /dev/null 2>&1
 export ALSADEV="plughw:${DEV_ID_REC}"
 
 # julius -C ${JULIUS_MAIN} -C ${JULIUS_AMGMM} -nostrip
-julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM}
+julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -fvad 3 -lv 1

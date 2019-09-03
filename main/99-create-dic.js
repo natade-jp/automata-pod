@@ -43,8 +43,13 @@ const parseFormat = (text) => {
 }
 
 
+const TARGET_FILE = "./dict/main/main";
+const INPUT_FILE_KISOKU = TARGET_FILE + ".kisoku";
+const OUTPUT_FILE_GEAMMER = TARGET_FILE + ".grammar";
+const OUTPUT_FILE_VOCA = TARGET_FILE + ".voca";
+
 const main = async() => {
-	const kisoku = File.loadTextFile("./dict/main/memo.kisoku");
+	const kisoku = File.loadTextFile(INPUT_FILE_KISOKU);
 	const kisoku_lines = kisoku.split(/\r?\n/);
 
 	const load_bunpou = [];
@@ -136,7 +141,9 @@ const main = async() => {
 			}
 		}
 		// 変数以外に利用されている（読みとして）
-		yomi_hash[word].is_notvar |= is_notvar;
+		if(def_reading === undefined) {
+			yomi_hash[word].is_notvar |= is_notvar;
+		}
 		const ret = (is_notvar ? "" : "VAR_") + yomi_hash[word].yomi;
 		return ret;
 	}
@@ -189,16 +196,42 @@ const main = async() => {
 		// ワードを作成
 		for(const key in load_tango) {
 			const tango_list = load_tango[key];
-			let grammar_line = await getYomiData(tango_list.name) + ":";
 			for(const word_key in tango_list.word_list) {
+				let grammar_line = await getYomiData(tango_list.name) + ":";
 				grammar_line += " " + await getYomiData(tango_list.word_list[word_key]);
+				grammar.push(grammar_line);
 			}
-			grammar.push(grammar_line);
 		}
 
-		console.log(grammar.join("\n"));
+		File.saveTextFile(OUTPUT_FILE_GEAMMER, grammar.join("\n") + "\n");
 	}
 
+	{
+		const voca = [];
+		const chohuku = {};
+		for(const key in yomi_hash) {
+			const data = yomi_hash[key];
+			if(!data.is_notvar) {
+				continue;
+			}
+			if(chohuku[data.yomi]) {
+				continue;
+			}
+			voca.push("% " + data.yomi);
+			voca.push(data.hiragana + " " + data.voca);
+			chohuku[data.yomi] = true;
+		}
+		voca.push("% NS_B");
+		voca.push("[s] silB");
+		voca.push("% NS_E");
+		voca.push("[/s] silE");
+
+		File.saveTextFile(OUTPUT_FILE_VOCA, voca.join("\n") + "\n");
+	}
+
+	{
+		require("child_process").execSync("mkdfa.pl " + TARGET_FILE);
+	}
 }
 
 main();
