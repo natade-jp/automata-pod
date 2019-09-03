@@ -26,7 +26,7 @@ fi
 export ALSADEV="plughw:${DEV_ID_REC}"
 
 # バッググラウンドで起動
-julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -module > /dev/null &
+julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -fvad 3 -lv 1 -module > /dev/null &
 
 # 起動するまで待つ
 while :
