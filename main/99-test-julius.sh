@@ -3,6 +3,12 @@
 # 変数を取得
 . ./environment.sh
 
+# 起動していたら終了
+PID=`pgrep -fo julius | wc -c` > /dev/null 2>&1
+if [ ${PID} -ne 0 ] ; then
+	killall julius > /dev/null
+fi
+
 # 音量調整
 amixer sset PCM ${VOL_MIC} -c${DEV_ID_REC} > /dev/null 2>&1
 

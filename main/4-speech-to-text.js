@@ -6,9 +6,9 @@
 // node ./4-speech-to-text.js
 
 // Imports the Google Cloud client library
-const fs = require('fs');
-const Speech = require('@google-cloud/speech');
-const File = require('./lib/File');
+const fs = require("fs");
+const Speech = require("@google-cloud/speech");
+const File = require("./lib/File");
 
 const env = File.getEnvironmentFile("./environment.sh");
 const json_data = JSON.parse(File.loadTextFile(env["RECOGNIZE_API_KEY"]));
@@ -33,7 +33,7 @@ async function main() {
 		languageCode: languageCode
 	};
 	const audio = {
-		content: fs.readFileSync(filename).toString('base64')
+		content: fs.readFileSync(filename).toString("base64")
 	};
 
 	const request = {
@@ -45,7 +45,7 @@ async function main() {
 	const [response] = await client.recognize(request);
 	const transcription = response.results
 		.map(result => result.alternatives[0].transcript)
-		.join('\n');
+		.join("\n");
 	
 	console.log(transcription);
 	File.saveTextFile(env["RECOGNIZE_RESULT"], transcription);

@@ -1,39 +1,66 @@
-const net = require('net');
+const net = require("net");
 
 // 接続
 const client = new net.Socket();
-client.connect( 10500, 'localhost', function( data ){
+client.connect( 10500, "localhost", function( data ){
 	console.log( "接続完了" );
 });
 
-// 受信時
-client.on('data', function( data ){
-	const text = data.toString().split(/\r?\n/g);
-	for(let i = 0 ; i < text.length; i++) {
-		const line = text[i];
-		if(/WORD="/.test(line)) {
-			const word = line.replace(/.*WORD="([^"]*).*/, "$1");
-			const cm = line.replace(/.*CM="([^"]*).*/, "$1");
-			if(/ポッド/.test(word)) {
-				console.log( "OK" );
-				process.exit();
-			}
-		}
-	}
-});
-
 // 閉じた場合の動作
-client.on('close', function(){
+client.on("close", function(){
 	console.log( "接続終了" );
 })
 
 // エラー発生時
-process.on('uncaughtException', function (err) {
+process.on("uncaughtException", function (err) {
     console.log(err.errno);
 	process.exit();
 });
 
 // Ctrl + C
-process.on('SIGINT', function() {
+process.on("SIGINT", function() {
 	process.exit();
 });
+
+// 受信時
+let receive_buffer = "";
+client.on("data", function( data ){
+	const text = data.toString().split(/\r?\n/g);
+	for(let i = 0 ; i < text.length; i++) {
+		// 文が途切れている可能性もあるので繋げていく
+		receive_buffer += text[i];
+		if(/>$/.test(receive_buffer)) {
+			// 最後が > なら文章として成立。
+			receiveLine(receive_buffer);
+			receive_buffer = "";
+		}
+	}
+});
+
+let is_recogout = false;
+let buffer_recogout = "";
+/**
+ * 1ラインのデータを受信時の動作
+ * @param {string} line 
+ */
+const receiveLine = function(line) {
+	if(/<RECOGOUT>/.test(line)) {
+		is_recogout = true;
+	}
+	if(is_recogout) {
+		buffer_recogout += line + "\n";
+	}
+	if(/<\/RECOGOUT>/.test(line)) {
+		is_recogout = false;
+		onRecogout(buffer_recogout);
+		buffer_recogout = "";
+	}
+}
+
+/**
+ * 音声認識データを取得
+ * @param {string} text_recogout 
+ */
+const onRecogout = function(text_recogout) {
+	console.log(text_recogout);
+}
