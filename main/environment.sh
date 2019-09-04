@@ -5,7 +5,7 @@ DEV_ID_PLAY="0"
 DEV_ID_REC="1"
 
 # ボリューム
-VOL_SPEAKER="80%"
+VOL_SPEAKER="70%"
 VOL_MIC="100%"
 
 # open_jtalk用
@@ -17,7 +17,12 @@ VOL_MIC="100%"
 TALK_HTS="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
 TALK_JDIC="/var/lib/mecab/dic/open-jtalk/naist-jdic"
 TALK_FILE="./text-to-speech.wav"
-TALK_EFFECT="tempo 1.05 echo 1.0 0.75 100 0.3"
+# この辺を参考に声をいじる
+# https://stackoverflow.com/questions/29957719/how-to-make-robot-or-dalek-voice-using-sox-library
+# TALK_EFFECT="overdrive 10 echo 0.8 0.8 5 0.7 echo 0.8 0.7 6 0.7 echo 0.8 0.7 10 0.7 echo 0.8 0.7 12 0.7"
+# TALK_EFFECT="tempo 1.05 echo 1.0 0.75 100 0.3"
+TALK_EFFECT="tempo 1.05 overdrive 10 echo 0.8 0.8 5 0.7 echo 0.8 0.7 6 0.7 echo 0.8 0.7 10 0.7 echo 1.0 0.75 100 0.3"
+# TALK_EFFECT="stretch 1.2 133.33 lin 0.2 0.4 overdrive 30 30 echo 0.4 0.8 15 0.8 synth sine fmod 30 echo 0.8 0.8 29 0.8"
 
 # julius用
 JULIUS_MAIN=~/julius/dictation-kit-4.5/main.jconf
