@@ -67,7 +67,7 @@ const onRecogout = function(text_recogout) {
 	const lines = text_recogout.split("\n");
 	let score_value = 0;
 	let words_value = "";
-	let words_count = 0;
+	let words_count = -2;
 	for(let i = 0; i < lines.length; i++) {
 		const line = lines[i];
 		const score = line.match(/SCORE="-?[0-9.]+"/);
@@ -81,12 +81,34 @@ const onRecogout = function(text_recogout) {
 		}
 	}
 
-	if((words_count === 3) && (score_value < -2500)) {
-		console.log(words_value);
-	}
-	else if(score_value < -3500) {
-		console.log(words_value);
+	if(words_count >= 0) {
+		onRecogoutKaiseki({
+			score : score_value * -1, // 分かりにくいので正にする
+			text : words_value,
+			count :words_count
+		});
 	}
 
 }
 
+/**
+ * 音声認識データを取得
+ * @param {{score : number, count : number, text : string}} data 
+ */
+const onRecogoutKaiseki = function(data) {
+	
+	// 1つのワードのみの認識の場合は、最大2500点必要
+	if(data.count === 1) {
+		if(data.score < 2500) {
+			return;
+		}
+	}
+	// 2ワード以上は、最大3500点必要
+	else if(data.score < 3500) {
+		return;
+	}
+
+	// 記号を削除
+	const text = data.text.replace(/\[[^\]]+\]/g, "");
+	console.log(text);
+}
