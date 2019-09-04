@@ -10,8 +10,11 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@google-cloud/speech": "^3.2.6"
+  "license": "",
+  "devDependencies": {},
+  "dependencies": {
+    "@google-cloud/speech": "^3.2.6",
+    "mecab-async": "^0.1.2",
+    "mojijs": "^3.0.2"
   }
 }

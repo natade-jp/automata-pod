@@ -2,6 +2,7 @@ const net = require("net");
 
 // 接続
 const client = new net.Socket();
+
 client.connect( 10500, "localhost", function( data ){
 	console.log( "接続完了" );
 });
@@ -62,5 +63,30 @@ const receiveLine = function(line) {
  * @param {string} text_recogout 
  */
 const onRecogout = function(text_recogout) {
-	console.log(text_recogout);
+
+	const lines = text_recogout.split("\n");
+	let score_value = 0;
+	let words_value = "";
+	let words_count = 0;
+	for(let i = 0; i < lines.length; i++) {
+		const line = lines[i];
+		const score = line.match(/SCORE="-?[0-9.]+"/);
+		if(score) {
+			score_value = parseFloat(score[0].replace(/[A-Z"=]/g, ""))
+		}
+		const word = line.match(/WORD="[^"]*"/);
+		if(word) {
+			words_count++;
+			words_value += word[0].replace(/(WORD=")([^"]*)(")/, "$2");
+		}
+	}
+
+	if((words_count === 3) && (score_value < -2500)) {
+		console.log(words_value);
+	}
+	else if(score_value < -3500) {
+		console.log(words_value);
+	}
+
 }
+

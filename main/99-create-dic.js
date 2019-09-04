@@ -1,5 +1,5 @@
 const File = require("./lib/File.js");
-const MojiJS = require("./lib/MojiJS.js");
+const MojiJS = require("mojijs");
 const yomi2voca = require("./lib/yomi2voca/yomi2voca.js");
 const env = File.getEnvironmentFile("./environment.sh");
 
@@ -27,11 +27,11 @@ MeCab.command = env["MECAB_RUN"];
  * Mecabを使用してテキストを解析する
  * 非同期処理を同期処理へ置き換える
  * @param {string} text 
- * @returns {*} 読み
+ * @returns {string} 読み
  */
 const parseFormat = (text) => {
 	return new Promise((resolve, reject) => {
-		MeCab.parseFormat(text, (err, morphs) => {
+		MeCab.parseFormat(text,(err, morphs) => {
 			let reading = ""
 			for(let i = 0; i < morphs.length; i++) {
 				const morph = morphs[i];
@@ -42,8 +42,7 @@ const parseFormat = (text) => {
 	});
 }
 
-
-const TARGET_FILE = "./dict/main/main";
+const TARGET_FILE = "./dict/main";
 const INPUT_FILE_KISOKU = TARGET_FILE + ".kisoku";
 const OUTPUT_FILE_GEAMMER = TARGET_FILE + ".grammar";
 const OUTPUT_FILE_VOCA = TARGET_FILE + ".voca";
@@ -111,8 +110,16 @@ const main = async() => {
 		}
 	}
 
+	/**
+	 * @param {Object<string, {hiragana : string, voca : string, romaji : string, yomi : string, is_notvar : boolean}>}
+	 */
 	const yomi_hash = {};
 
+	/**
+	 * @param {string} text 
+	 * @param {string} [def_reading]
+	 * @returns {string}
+	 */
 	const getYomiData = async(text, def_reading) => {
 		let word = text;
 		let is_notvar = /^[^$]/.test(word);
@@ -155,10 +162,6 @@ const main = async() => {
 			getYomiData(load_yomi[key].word, load_yomi[key].yomi);
 		}
 	}
-
-	// console.log(load_bunpou);
-	// console.log(load_tango);
-	// console.log(load_yomi);
 
 	// $日付 がついているデータを変数名に変更
 	// VAR_AAA のような感じにする
@@ -229,6 +232,7 @@ const main = async() => {
 		File.saveTextFile(OUTPUT_FILE_VOCA, voca.join("\n") + "\n");
 	}
 
+	// 辞書ファイルを作成する
 	{
 		require("child_process").execSync("mkdfa.pl " + TARGET_FILE);
 	}
