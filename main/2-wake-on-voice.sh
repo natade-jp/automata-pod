@@ -6,7 +6,7 @@ cd `dirname $0`
 # 二重起動防止
 pid=$$
 filepath=$0
-if test $pid != `pgrep -fo "${filepath}"` ; then
+if test $pid != `pgrep -fo "/bin/sh ${filepath}"` ; then
 	return 1
 fi
 
@@ -19,7 +19,7 @@ amixer sset PCM ${VOL_MIC} -c${DEV_ID_REC} > /dev/null 2>&1
 # 起動していたら終了
 PID=`pgrep -fo julius | wc -c` > /dev/null 2>&1
 if [ ${PID} -ne 0 ] ; then
-	killall julius > /dev/null
+	killall julius > /dev/null 2>&1
 fi
 
 # デバイスを指定
@@ -47,5 +47,5 @@ node ./2-wake-on-voice.js
 # 最後にサーバーを終了する
 PID=`pgrep -fo julius | wc -c` > /dev/null 2>&1
 if [ ${PID} -ne 0 ] ; then
-	killall julius > /dev/null
+	killall julius > /dev/null 2>&1
 fi

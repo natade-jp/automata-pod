@@ -6,7 +6,7 @@ cd `dirname $0`
 # 二重起動防止
 pid=$$
 filepath=$0
-if test $pid != `pgrep -fo "${filepath}"` ; then
+if test $pid != `pgrep -fo "/bin/sh ${filepath}"` ; then
 	return 1
 fi
 
@@ -20,7 +20,7 @@ INPUT_TEXT=$1
 OUTPUT="alsa plughw:${DEV_ID_PLAY}"
 
 # wavファイルを作成
-echo "${INPUT_TEXT}" | open_jtalk -m "${TALK_HTS}" -x "${TALK_JDIC}" -ow "${TALK_FILE}"
+echo "${INPUT_TEXT}" | open_jtalk -m "${TALK_HTS}" -x "${TALK_JDIC}" -ow "${TALK_FILE}" ${TALK_OPTION}
 
 # 音量調整
 amixer sset PCM ${VOL_SPEAKER} -c${DEV_ID_PLAY} > /dev/null 2>&1

@@ -1,4 +1,6 @@
 #!/bin/sh
+# crontab
+# 7 * * * * /home/pi/automata-pod/main/20-cron.sh
 
 # シェルスクリプトがある場所をカレントディレクトリにする
 cd `dirname $0`
@@ -10,12 +12,4 @@ if test $pid != `pgrep -fo "/bin/sh ${filepath}"` ; then
 	return 1
 fi
 
-# 変数を取得
-. ./environment.sh
-
-# すでにファイルがある場合は削除する
-if [ -f "${RECOGNIZE_RESULT}" ]; then
-	rm "${RECOGNIZE_RESULT}"
-fi
-
-node ./4-speech-to-text.js
+node "./20-cron.js"

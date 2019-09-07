@@ -1,10 +1,13 @@
-const File = require("./lib/File.js");
+//@ts-check
+
 const MojiJS = require("mojijs");
 const yomi2voca = require("./lib/yomi2voca/yomi2voca.js");
+const File = require("./lib/File.js");
 const env = File.getEnvironmentFile("./environment.sh");
 
 const MeCab = require("mecab-async");
 const mecab = new MeCab();
+// @ts-ignore
 MeCab.command = env["MECAB_RUN"];
 
 /**
@@ -27,10 +30,11 @@ MeCab.command = env["MECAB_RUN"];
  * Mecabを使用してテキストを解析する
  * 非同期処理を同期処理へ置き換える
  * @param {string} text 
- * @returns {string} 読み
+ * @returns {Promise<*>} 読み
  */
 const parseFormat = (text) => {
 	return new Promise((resolve, reject) => {
+		// @ts-ignore
 		MeCab.parseFormat(text,(err, morphs) => {
 			let reading = ""
 			for(let i = 0; i < morphs.length; i++) {
@@ -118,7 +122,7 @@ const main = async() => {
 	/**
 	 * @param {string} text 
 	 * @param {string} [def_reading]
-	 * @returns {string}
+	 * @returns {Promise<*>}
 	 */
 	const getYomiData = async(text, def_reading) => {
 		let word = text;
@@ -149,7 +153,7 @@ const main = async() => {
 		}
 		// 変数以外に利用されている（読みとして）
 		if(def_reading === undefined) {
-			yomi_hash[word].is_notvar |= is_notvar;
+			yomi_hash[word].is_notvar = yomi_hash[word].is_notvar || is_notvar;
 		}
 		const ret = (is_notvar ? "" : "VAR_") + yomi_hash[word].yomi;
 		return ret;

@@ -1,4 +1,6 @@
-﻿// 参考
+﻿//@ts-check
+
+// 参考
 // https://cloud.google.com/speech-to-text/docs/sync-recognize#speech-sync-recognize-nodejs
 // https://github.com/googleapis/nodejs-speech/issues/309
 // 
@@ -8,7 +10,7 @@
 // Imports the Google Cloud client library
 const fs = require("fs");
 const Speech = require("@google-cloud/speech");
-const File = require("./lib/File");
+const File = require("./lib/File.js");
 
 const env = File.getEnvironmentFile("./environment.sh");
 const json_data = JSON.parse(File.loadTextFile(env["RECOGNIZE_API_KEY"]));

@@ -1,4 +1,8 @@
+//@ts-check
+
 const net = require("net");
+const File = require("./lib/File.js");
+const env = File.getEnvironmentFile("./environment.sh");
 
 // 接続
 const client = new net.Socket();
@@ -14,6 +18,7 @@ client.on("close", function(){
 
 // エラー発生時
 process.on("uncaughtException", function (err) {
+    // @ts-ignore
     console.log(err.errno);
 	process.exit();
 });
@@ -77,7 +82,7 @@ const onRecogout = function(text_recogout) {
 		const word = line.match(/WORD="[^"]*"/);
 		if(word) {
 			words_count++;
-			words_value += word[0].replace(/(WORD=")([^"]*)(")/, "$2");
+			words_value += word[0].replace(/(WORD=")([^"]*)(")/, "$2") + " ";
 		}
 	}
 
@@ -96,19 +101,23 @@ const onRecogout = function(text_recogout) {
  * @param {{score : number, count : number, text : string}} data 
  */
 const onRecogoutKaiseki = function(data) {
-	
-	// 1つのワードのみの認識の場合は、最大2500点必要
+	// 1つのワードのみの
 	if(data.count === 1) {
-		if(data.score < 2500) {
+		
+		if(data.score < parseFloat(env["JULIUS_MINSCORE_1GRAM"])) {
 			return;
 		}
 	}
-	// 2ワード以上は、最大3500点必要
-	else if(data.score < 3500) {
+	// 2ワード以上
+	else if(data.score < parseFloat(env["JULIUS_MINSCORE_NGRAM"])) {
 		return;
 	}
 
 	// 記号を削除
-	const text = data.text.replace(/\[[^\]]+\]/g, "");
-	console.log(text);
+	const transcription = data.text.replace(/\[[^\]]+\]/g, "").trim();
+	console.log(transcription);
+	File.saveTextFile(env["JULIUS_RESULT"], transcription);
+
+	// 終了
+	process.exit();
 }

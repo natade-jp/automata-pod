@@ -14,7 +14,9 @@
   "devDependencies": {},
   "dependencies": {
     "@google-cloud/speech": "^3.2.6",
+    "@types/jquery": "^3.3.31",
     "mecab-async": "^0.1.2",
-    "mojijs": "^3.0.2"
+    "mojijs": "^3.0.2",
+    "webscrape": "^2.0.0"
   }
 }

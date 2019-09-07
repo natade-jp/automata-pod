@@ -1,4 +1,4 @@
-/*!
+/**
  * File.js
  * https://github.com/natade-jp/konpeito
  * Copyright 2013-2019 natade < https://github.com/natade-jp >
@@ -6,6 +6,8 @@
  * The MIT license.
  * https://opensource.org/licenses/MIT
  */
+
+//@ts-check
 
 const fs = require("fs");
 const child_process = require("child_process");
@@ -256,14 +258,152 @@ class File {
 			if(!/=/.test(line)) {
 				continue;
 			}
-			const parm = line.replace(/=.*/, "").trim();
+			const name = line.replace(/=.*/, "").trim();
 			let data = line.replace(/[^=]+=/, "").trim();
 			if(/^".*"$/.test(data)) {
 				data = data.replace(/^"(.*)"$/, "$1");
 			}
-			output[parm] = data;
+			output[name] = data;
 		}
 		return output;
+	}
+
+	/**
+	 * CSVファイルを作成
+	 * @param {string} text 
+	 * @param {string} [separator=","]
+	 * @returns {string[][]}
+	 */
+	static parseCSV(text, separator) {
+		if(arguments.length < 2) {
+			separator = ",";
+		}
+		// 改行コードの正規化
+		text = text.replace(/\r\n?|\n/g, "\n");
+		const CODE_SEPARATOR = separator.charCodeAt(0);
+		const CODE_CR    = 0x0D;
+		const CODE_LF    = 0x0A;
+		const CODE_DOUBLEQUOTES = 0x22;
+		const out = [];
+		const length = text.length;
+		let element = "";
+		let count_rows    = 0;
+		let count_columns = 0;
+		let isnextelement = false;
+		let isnextline    = false;
+		for(let i = 0; i < length; i++) {
+			let code = text.charCodeAt(i);
+			// 複数行なら一気に全て読み込んでしまう(1文字目がダブルクォーテーションかどうか)
+			if((code === CODE_DOUBLEQUOTES)&&(element.length === 0)) {
+				i++;
+				for(;i < length;i++) {
+					code = text.charCodeAt(i);
+					if(code === CODE_DOUBLEQUOTES) {
+						// フィールドの終了か？
+						// 文字としてのダブルクォーテーションなのか
+						if((i + 1) !== (length - 1)) {
+							if(text.charCodeAt(i + 1) === CODE_DOUBLEQUOTES) {
+								i++;
+								element += "\""; 
+							}
+							else {
+								break;
+							}
+						}
+						else {
+							break;
+						}
+					}
+					else {
+						element += text.charAt(i);
+					}
+				}
+			}
+			// 複数行以外なら1文字ずつ解析
+			else {
+				switch(code) {
+					case(CODE_SEPARATOR):
+						isnextelement = true;
+						break;
+					case(CODE_CR):
+					case(CODE_LF):
+						isnextline = true;
+						break;
+					default:
+						break;
+				}
+				if(isnextelement) {
+					isnextelement = false;
+					if(out[count_rows] === undefined) {
+						out[count_rows] = [];
+					}
+					out[count_rows][count_columns] = element;
+					element = "";
+					count_columns += 1;
+				}
+				else if(isnextline) {
+					isnextline = false;
+					//文字があったり、改行がある場合は処理
+					//例えば CR+LF や 最後のフィールド で改行しているだけなどは無視できる
+					if((element !== "")||(count_columns !== 0)) {
+						if(out[count_rows] === undefined) {
+							out[count_rows] = [];
+						}
+						out[count_rows][count_columns] = element;
+						element = "";
+						count_rows    += 1;
+						count_columns  = 0;
+					}
+				}
+				else {
+					element += text.charAt(i);
+				}
+			}
+			// 最終行に改行がない場合
+			if(i === length - 1) {
+				if(count_columns !== 0) {
+					out[count_rows][count_columns] = element;
+				}
+			}
+		}
+		return out;
+	}
+	
+	/**
+	 * CSVファイルを作成
+	 * @param {string} text 
+	 * @param {string} [separator=","] 
+	 * @param {string} [newline="\r\n"] 
+	 * @returns {string}
+	 */
+	static makeCSV(text, separator, newline) {
+		if(arguments.length < 2) {
+			separator = ",";
+		}
+		if(arguments.length < 3) {
+			newline = "\r\n";
+		}
+		let out = "";
+		const escape = /["\r\n,\t]/;
+		if(text !== undefined) {
+			for(let i = 0;i < text.length;i++) {
+				if(text[i] !== undefined) {
+					for(let j = 0;j < text[i].length;j++) {
+						let element = text[i][j];
+						if(escape.test(element)) {
+							element = element.replace(/"/g, "\"\"");
+							element = "\"" + element + "\"";
+						}
+						out += element;
+						if(j !== text[i].length - 1) {
+							out += separator;
+						}
+					}
+				}
+				out += newline;
+			}
+		}
+		return out;
 	}
 
 }
