@@ -12,23 +12,23 @@ if(process.argv.length && process.argv.length >= 3) {
 const date = new Date();
 
 let itu = "今日";
-if(/いま/.test(input_text) && /きょう/.test(input_text)) {
+if(/いま|今/.test(input_text) && /きょう|今日/.test(input_text)) {
 	itu = "今日";
 }
-else if(/あした/.test(input_text)) {
+else if(/あした|明日/.test(input_text)) {
 	date.setDate(date.getDate() + 1);
 	itu = "明日";
 }
-else if(/あさって/.test(input_text)) {
+else if(/あさって|明後日/.test(input_text)) {
 	date.setDate(date.getDate() + 2);
 	itu = "あさって";
 }
-else if(/きのう/.test(input_text)) {
+else if(/きのう|昨日/.test(input_text)) {
 	date.setDate(date.getDate() - 1);
 	itu = "昨日";
 }
 
-if(/いま/.test(input_text) && /きおん|おんど/.test(input_text)) {
+if(/いま|今/.test(input_text) && /きおん|おんど|気温|温度/.test(input_text)) {
 	
 	/**
 	 * @type {import("./20-cron.js").気温データ[]}

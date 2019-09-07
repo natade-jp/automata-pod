@@ -29,6 +29,7 @@ const onWakeVoice = function(target_text, pattern) {
 Pod.talkText("プログラムを開始します。");
 
 while(true) {
+	console.log("...");
 	Pod.run("./2-wake-on-voice.sh");
 
 	const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
@@ -74,11 +75,44 @@ while(true) {
 		{
 			search: [ /いみ/ ], run:(test) => {
 				Pod.talkText("どの意味を調べますか。");
+				Pod.run("./3-voice-record.sh");
+				if(File.isExist(env["RECOGNIZE_FILE"])) {
+					Pod.talkText("はい。");
+					Pod.run("./4-speech-to-text.sh");
+					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+					console.log("google " + google_result);
+					Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+				}
+				else {
+					Pod.talkText("声がよく聞こえませんでした。");
+				}
 			}
 		},
 		{
 			search: [ /ぽっど|しつもん/ ], run:(test) => {
 				Pod.talkText("はい。なんでしょう。");
+				Pod.run("./3-voice-record.sh");
+				if(File.isExist(env["RECOGNIZE_FILE"])) {
+					Pod.talkText("はい。");
+					Pod.run("./4-speech-to-text.sh");
+					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+					console.log("google " + google_result);
+					if(/時刻|時間|何時/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
+						Pod.node("./10-get-time.js \"" + google_result + "\"");
+					}
+					else if(/天気|気温|温度/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
+						Pod.node("./11-get-weather.js \"" + google_result + "\"");
+					}
+					else if(/って何|とは|の意味/.test(google_result)) {
+						Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+					}
+					else {
+						Pod.talkText("申し訳ございません。理解できませんでした。");
+					}
+				}
+				else {
+					Pod.talkText("声がよく聞こえませんでした。");
+				}
 			}
 		}
 	]);
