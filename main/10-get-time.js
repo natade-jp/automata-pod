@@ -25,7 +25,7 @@ else if(/きのう/.test(input_text)) {
 	itu = "昨日";
 }
 
-if(/いま/.test(input_text) && /なんじ/.test(input_text)) {
+const speakJikoku = function() {
 	const hour = date.getHours();
 	const minutes = date.getMinutes();
 	let ji = "";
@@ -38,11 +38,22 @@ if(/いま/.test(input_text) && /なんじ/.test(input_text)) {
 
 	const text = ji + "時" + minutes + "分";
 	Pod.talkText("只今の時刻は、" + text + "です。");
-}
-else {
+};
+
+const speakHiduke = function() {
 	const month = date.getMonth() + 1;
 	const day = date.getDate();
 	const youbi = [ "日", "月", "火", "水", "木", "金", "土" ][date.getDay()];
 	const text = month + "月" + day + "日 " + youbi + "曜日";
 	Pod.talkText(itu + "は、" + text + "です。");
+};
+
+if(/いま/.test(input_text) && /なんじ/.test(input_text)) {
+	speakJikoku();
+}
+else {
+	speakHiduke();
+	if(/いま/.test(input_text) || /きょう/.test(input_text)) {
+		speakJikoku();
+	}
 }

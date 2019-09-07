@@ -32,7 +32,7 @@ while(true) {
 	Pod.run("./2-wake-on-voice.sh");
 
 	const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
-	console.log(julius_result);
+	console.log("recv " + julius_result);
 
 	onWakeVoice(julius_result, [
 		{
@@ -49,12 +49,14 @@ while(true) {
 		},
 		{
 			search: [ /てんき|きおん|おんど/ ], run:(test) => {
-				Pod.talkText("天気を調べます。");
+				Pod.talkText("はい。");
+				Pod.node("./11-get-weather.js \"" + julius_result + "\"");
 			}
 		},
 		{
 			search: [ /なんにち|なんようび/ ], run:(test) => {
-				Pod.talkText("日付を調べます");
+				Pod.talkText("はい。");
+				Pod.node("./10-get-time.js \"" + julius_result + "\"");
 			}
 		},
 		{
@@ -65,7 +67,8 @@ while(true) {
 		},
 		{
 			search: [ /りぶーと/ ], run:(test) => {
-				Pod.talkText("リブートしていいですか？");
+//				Pod.talkText("リブートします。");
+//				Pod.run("sudo reboot");
 			}
 		},
 		{

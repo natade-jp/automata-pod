@@ -76,7 +76,15 @@ else {
 	}
 
 	if(target) {
-		const text = itu + "の天気は" + target["天気"] + "、降水確率は" + target["降水確率"] + "%、最低気温は" + target["最低気温"] + "度、最高気温は" + target["最高気温"] + "度になります。";
+//		const text = itu + "の天気は" + target["天気"] + "、降水確率は" + target["降水確率"] + "%、最低気温は" + target["最低気温"] + "度、最高気温は" + target["最高気温"] + "度になります。";
+		let text;
+		text = itu + "の天気は" + target["天気"];
+		Pod.talkText(text);
+		text = "降水確率は" + target["降水確率"] + "%";
+		Pod.talkText(text);
+		text = "最低気温は" + target["最低気温"] + "度";
+		Pod.talkText(text);
+		text = "最高気温は" + target["最高気温"] + "度になります。";
 		Pod.talkText(text);
 	}
 }

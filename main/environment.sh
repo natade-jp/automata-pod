@@ -5,7 +5,7 @@ DEV_ID_PLAY="0"
 DEV_ID_REC="1"
 
 # ボリューム
-VOL_SPEAKER="70%"
+VOL_SPEAKER="80%"
 VOL_MIC="100%"
 
 # open_jtalk用
