@@ -95,3 +95,6 @@ sudo make install
 # 以降以下で、実行可能
 # mecab -d /usr/local/lib/mecab/dic/ipadic
 
+# crontab に以下を追加
+# @reboot /home/pi/automata-pod/main/0-mainloop.sh
+# 7 * * * * /home/pi/automata-pod/main/20-cron.sh

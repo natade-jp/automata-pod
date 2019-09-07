@@ -68,8 +68,8 @@ while(true) {
 		},
 		{
 			search: [ /りぶーと/ ], run:(test) => {
-//				Pod.talkText("リブートします。");
-//				Pod.run("sudo reboot");
+				Pod.talkText("リブートします。");
+				Pod.run("sudo reboot");
 			}
 		},
 		{
