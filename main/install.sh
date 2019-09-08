@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# フォルダ構成
+# フォルダ構成は以下を想定しています。
 # pi
 #  automata-pod
 #   main
