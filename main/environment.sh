@@ -5,7 +5,7 @@ DEV_ID_PLAY="0"
 DEV_ID_REC="1"
 
 # ボリューム
-VOL_SPEAKER="80%"
+VOL_SPEAKER="90%"
 VOL_MIC="100%"
 
 # open_jtalk用
@@ -26,8 +26,8 @@ TALK_EFFECT="pitch -60 overdrive 10 echo 0.8 0.8 5 0.7 echo 0.8 0.7 6 0.7 echo 0
 # TALK_EFFECT="stretch 1.2 133.33 lin 0.2 0.4 overdrive 30 30 echo 0.4 0.8 15 0.8 synth sine fmod 30 echo 0.8 0.8 29 0.8"
 
 # julius用
-JULIUS_MAIN=~/julius/dictation-kit-4.5/main.jconf
-JULIUS_AMGMM=~/julius/dictation-kit-4.5/am-gmm.jconf
+JULIUS_MAIN="/home/pi/julius/dictation-kit-4.5/main.jconf"
+JULIUS_AMGMM="/home/pi/julius/dictation-kit-4.5/am-gmm.jconf"
 JULIUS_GRAM="./dict/main"
 JULIUS_MINSCORE_1GRAM=2500 # 1ワードの最低認識スコア
 JULIUS_MINSCORE_NGRAM=3500 # それ以上の最低認識スコア

@@ -32,7 +32,15 @@ while(true) {
 	console.log("...");
 	Pod.run("./2-wake-on-voice.sh");
 
+	// ファイルがない場合は失敗している。
+	if(!File.isExist(env["JULIUS_RESULT"])) {
+		Pod.sleep(1.0);
+		continue;
+	}
+
 	const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
+	File.deleteFile(env["JULIUS_RESULT"]);
+
 	console.log("recv " + julius_result);
 
 	onWakeVoice(julius_result, [
@@ -73,6 +81,12 @@ while(true) {
 			}
 		},
 		{
+			search: [ /ぷろせす/ ], run:(test) => {
+				Pod.talkText("プロセスを終了します。");
+				process.exit();
+			}
+		},
+		{
 			search: [ /いみ/ ], run:(test) => {
 				Pod.talkText("どの意味を調べますか。");
 				Pod.run("./3-voice-record.sh");
@@ -80,6 +94,7 @@ while(true) {
 					Pod.talkText("はい。");
 					Pod.run("./4-speech-to-text.sh");
 					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+					File.deleteFile(env["RECOGNIZE_RESULT"]);
 					console.log("google " + google_result);
 					Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
 				}
@@ -96,6 +111,7 @@ while(true) {
 					Pod.talkText("はい。");
 					Pod.run("./4-speech-to-text.sh");
 					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+					File.deleteFile(env["RECOGNIZE_RESULT"]);
 					console.log("google " + google_result);
 					if(/時刻|時間|何時/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
 						Pod.node("./10-get-time.js \"" + google_result + "\"");

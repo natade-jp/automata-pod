@@ -1,4 +1,6 @@
 #!/bin/sh
+# crontab
+# 7 * * * * /home/pi/automata-pod/main/21-cron.sh
 
 # シェルスクリプトがある場所をカレントディレクトリにする
 cd `dirname $0`
@@ -10,8 +12,4 @@ if test $pid != `pgrep -fo "/bin/sh ${filepath}"` ; then
 	return 1
 fi
 
-./21-cron.sh
-
-node ./0-mainloop.js
-
-
+node "./21-cron.js"
