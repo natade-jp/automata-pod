@@ -1,5 +1,7 @@
 #!/bin/sh
-# crontab
+#
+# crontab -e で以下を追加してください
+# ※crontab 内に @reboot で追加しないでください。
 # 7 * * * * /home/pi/automata-pod/main/21-cron.sh
 
 # シェルスクリプトがある場所をカレントディレクトリにする

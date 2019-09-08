@@ -11,6 +11,8 @@
 #   mecab-0.996
 #   mecab-ipadic-2.7.0-20070801
 
+
+
 # apt-get を更新
 sudo apt-get -y update
 
@@ -24,7 +26,7 @@ sudo apt-get install -y sleepenh
 # 計算用
 sudo apt-get install -y bc
 
-# Open-JDK をインストール
+# Open JTalk をインストール
 sudo apt-get install -y open-jtalk
 sudo apt-get install -y open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001
 
@@ -49,7 +51,8 @@ rm -r ./hts-voice
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
-# パッケージ
+# 必要なパッケージをインストールする
+cd `dirname $0`
 npm install
 
 # Julius
@@ -95,6 +98,12 @@ sudo make install
 # 以降以下で、実行可能
 # mecab -d /usr/local/lib/mecab/dic/ipadic
 
-# crontab に以下を追加
-# @reboot /home/pi/automata-pod/main/20-startup.sh
+
+# スタートアップ及び、定期実行の設定
+#
+# /etc/rc.local を編集して以下を追加してください。
+# ※crontab 内に @reboot で追加しないでください。
+# /home/pi/automata-pod/main/20-startup.sh
+#
+# crontab に以下を追加してください。
 # 7 * * * * /home/pi/automata-pod/main/21-cron.sh
