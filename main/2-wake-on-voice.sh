@@ -29,7 +29,7 @@ export ALSADEV="plughw:${DEV_ID_REC}"
 # 手動実行する場合は特に問題がおきないが、
 # 自動実行させる場合は "crontab @reboot" では実行しようとするとエラーなしで即終了する。
 # そのため /etc/rc.local で起動させる。
-julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -fvad 3 -lv 1 -module > /dev/null &
+julius -C ${JULIUS_AMGMM} -nostrip -gram ${JULIUS_GRAM} -fvad 1 -lv 0 -module > /dev/null &
 
 # 1秒待つ
 sleepenh 1.0 > /dev/null
