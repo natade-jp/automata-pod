@@ -6,10 +6,8 @@
 わ w a
 % WANANDESUKA
 わなんですか w a n a N d e s u k a
-% POQDO
-ぽっど p o q d o
-% ICHIGOUSAN
-いちごうさん i ch i g o u s a N
+% POQDOSAN
+ぽっどさん p o q d o s a N
 % ASAQTE
 あさって a s a q t e
 % NANYOUBI
@@ -22,6 +20,16 @@
 おはようございます o h a y o u g o z a i m a s u
 % OYASUMINASAI
 おやすみなさい o y a s u m i n a s a i
+% OTSUKARESAMADESU
+おつかれさまです o ts u k a r e s a m a d e s u
+% SUGOIDESUNE
+すごいですね s u g o i d e s u n e
+% KAWAIIDESUNE
+かわいいですね k a w a i i d e s u n e
+% JIKOSHOUKAIOSHITEKUDASAI
+じこしょうかいをしてください j i k o sh o u k a i o sh i t e k u d a s a i
+% NAMAEOOSHIETEKUDASAI
+なまえをおしえてください n a m a e o o sh i e t e k u d a s a i
 % NO
 の n o
 % TENKI
@@ -34,6 +42,18 @@
 いみ i m i
 % DOUIU
 どういう d o u i u
+% HAI
+はい h a i
+% YOROSHIKU
+よろしく y o r o sh i k u
+% ONEGAISHIMASU
+おねがいします o n e g a i sh i m a s u
+% ONEGAIITASHIMASU
+おねがいいたします o n e g a i i t a sh i m a s u
+% IIEKYOHISHIMASU
+いいえきょひします i i e ky o h i sh i m a s u
+% KYOHISHIMASU
+きょひします ky o h i sh i m a s u
 % IMA
 いま i m a
 % KYOU
@@ -50,6 +70,8 @@
 ですか d e s u k a
 % PUROSESUOSHUURYOU
 ぷろせすをしゅうりょう p u r o s e s u o sh u u ry o u
+% PUROGURAMUOSHUURYOU
+ぷろぐらむをしゅうりょう p u r o g u r a m u o sh u u ry o u
 % SHITEKUDASAI
 してください sh i t e k u d a s a i
 % SHITEIIDESUKA

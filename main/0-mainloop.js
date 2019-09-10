@@ -57,6 +57,18 @@ while(true) {
 			search: [ /おやすみなさい/ ], run:(test) => {Pod.talkText("はい。おやすみなさい。");}
 		},
 		{
+			search: [ /おつかれさまです/ ], run:(test) => {Pod.talkText("ありがとうございます。");}
+		},
+		{
+			search: [ /すごいですね/ ], run:(test) => {Pod.talkText("ほめても、何も出ませんよ。");}
+		},
+		{
+			search: [ /かわいいですね/ ], run:(test) => {Pod.talkText("ありがとうございます。心に受け取っておきます。");}
+		},
+		{
+			search: [ /じこしょうかい|なまえ/ ], run:(test) => {Pod.talkText("はい。私の名前はポッド。随行支援ユニットです。");}
+		},
+		{
 			search: [ /てんき|きおん|おんど/ ], run:(test) => {
 				Pod.talkText("はい。", true);
 				Pod.node("./11-get-weather.js \"" + julius_result + "\"");
@@ -70,20 +82,47 @@ while(true) {
 		},
 		{
 			search: [ /しゃっとだうん/ ], run:(test) => {
-				Pod.talkText("シャットダウンします。");
-				Pod.run("sudo shutdown -r now");
+				Pod.talkText("シャットダウンしてよろしいですか。");
+				Pod.run("./2-wake-on-voice.sh");
+				const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
+				File.deleteFile(env["JULIUS_RESULT"]);
+				if(/おねがい/.test(julius_result)) {
+					Pod.talkText("シャットダウンします。");
+					Pod.run("sudo shutdown -P now");
+				}
+				else {
+					Pod.talkText("要求を破棄しました。");
+				}
 			}
 		},
 		{
 			search: [ /りぶーと/ ], run:(test) => {
-				Pod.talkText("リブートします。");
-				Pod.run("sudo reboot");
+				Pod.talkText("リブートしてよろしいですか。");
+				Pod.run("./2-wake-on-voice.sh");
+				const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
+				File.deleteFile(env["JULIUS_RESULT"]);
+				if(/おねがい/.test(julius_result)) {
+					Pod.talkText("リブートします。");
+					Pod.run("sudo reboot");
+				}
+				else {
+					Pod.talkText("要求を破棄しました。");
+				}
 			}
 		},
 		{
-			search: [ /ぷろせす/ ], run:(test) => {
-				Pod.talkText("プロセスを終了します。");
-				process.exit();
+			search: [ /ぷろせす|ぷろぐらむ/ ], run:(test) => {
+				Pod.talkText("プロセスを終了してよろしいですか。");
+				Pod.run("./2-wake-on-voice.sh");
+				const julius_result = File.loadTextFile(env["JULIUS_RESULT"]);
+				File.deleteFile(env["JULIUS_RESULT"]);
+				if(/おねがい/.test(julius_result)) {
+					Pod.talkText("プロセスを終了します。");
+					process.exit();
+				}
+				else {
+					Pod.talkText("要求を破棄しました。");
+				}
 			}
 		},
 		{

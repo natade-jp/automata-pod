@@ -27,7 +27,7 @@ MeCab.command = env["MECAB_RUN"];
  */
 
 /**
- * Mecabを使用してテキストを解析する
+ * MeCabを使用してテキストを解析する
  * 非同期処理を同期処理へ置き換える
  * @param {string} text 
  * @returns {Promise<*>} 読み

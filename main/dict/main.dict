@@ -2,32 +2,43 @@
 1	[こんばんわ]	k o N b a N w a
 2	[わ]	w a
 3	[わなんですか]	w a n a N d e s u k a
-4	[ぽっど]	p o q d o
-5	[いちごうさん]	i ch i g o u s a N
-6	[あさって]	a s a q t e
-7	[なんようび]	n a N y o u b i
-8	[しゃっとだうん]	sh a q t o d a u N
-9	[りぶーと]	r i b u: t o
-10	[おはようございます]	o h a y o u g o z a i m a s u
-11	[おやすみなさい]	o y a s u m i n a s a i
-12	[の]	n o
-13	[てんき]	t e N k i
-14	[なんにち]	n a N n i ch i
-15	[しつもん]	sh i ts u m o N
-16	[いみ]	i m i
-17	[どういう]	d o u i u
-18	[いま]	i m a
-19	[きょう]	ky o u
-20	[あした]	a sh i t a
-21	[きおん]	k i o N
-22	[おんど]	o N d o
-23	[をおしえてください]	o o sh i e t e k u d a s a i
-24	[ですか]	d e s u k a
-25	[ぷろせすをしゅうりょう]	p u r o s e s u o sh u u ry o u
-26	[してください]	sh i t e k u d a s a i
-27	[していいですか]	sh i t e i i d e s u k a
-28	[します]	sh i m a s u
-29	[どのような]	d o n o y o u n a
-30	[どんな]	d o N n a
-31	[[s]]	silB
-32	[[/s]]	silE
+4	[ぽっどさん]	p o q d o s a N
+5	[あさって]	a s a q t e
+6	[なんようび]	n a N y o u b i
+7	[しゃっとだうん]	sh a q t o d a u N
+8	[りぶーと]	r i b u: t o
+9	[おはようございます]	o h a y o u g o z a i m a s u
+10	[おやすみなさい]	o y a s u m i n a s a i
+11	[おつかれさまです]	o ts u k a r e s a m a d e s u
+12	[すごいですね]	s u g o i d e s u n e
+13	[かわいいですね]	k a w a i i d e s u n e
+14	[じこしょうかいをしてください]	j i k o sh o u k a i o sh i t e k u d a s a i
+15	[なまえをおしえてください]	n a m a e o o sh i e t e k u d a s a i
+16	[の]	n o
+17	[てんき]	t e N k i
+18	[なんにち]	n a N n i ch i
+19	[しつもん]	sh i ts u m o N
+20	[いみ]	i m i
+21	[どういう]	d o u i u
+22	[はい]	h a i
+23	[よろしく]	y o r o sh i k u
+24	[おねがいします]	o n e g a i sh i m a s u
+25	[おねがいいたします]	o n e g a i i t a sh i m a s u
+26	[いいえきょひします]	i i e ky o h i sh i m a s u
+27	[きょひします]	ky o h i sh i m a s u
+28	[いま]	i m a
+29	[きょう]	ky o u
+30	[あした]	a sh i t a
+31	[きおん]	k i o N
+32	[おんど]	o N d o
+33	[をおしえてください]	o o sh i e t e k u d a s a i
+34	[ですか]	d e s u k a
+35	[ぷろせすをしゅうりょう]	p u r o s e s u o sh u u ry o u
+36	[ぷろぐらむをしゅうりょう]	p u r o g u r a m u o sh u u ry o u
+37	[してください]	sh i t e k u d a s a i
+38	[していいですか]	sh i t e i i d e s u k a
+39	[します]	sh i m a s u
+40	[どのような]	d o n o y o u n a
+41	[どんな]	d o N n a
+42	[[s]]	silB
+43	[[/s]]	silE
