@@ -58,13 +58,13 @@ while(true) {
 		},
 		{
 			search: [ /てんき|きおん|おんど/ ], run:(test) => {
-				Pod.talkText("はい。");
+				Pod.talkText("はい。", true);
 				Pod.node("./11-get-weather.js \"" + julius_result + "\"");
 			}
 		},
 		{
 			search: [ /なんにち|なんようび/ ], run:(test) => {
-				Pod.talkText("はい。");
+				Pod.talkText("はい。", true);
 				Pod.node("./10-get-time.js \"" + julius_result + "\"");
 			}
 		},
@@ -91,8 +91,9 @@ while(true) {
 				Pod.talkText("どの意味を調べますか。");
 				Pod.run("./3-voice-record.sh");
 				if(File.isExist(env["RECOGNIZE_FILE"])) {
-					Pod.talkText("はい。");
+					Pod.talkText("はい。", true);
 					Pod.run("./4-speech-to-text.sh");
+					Pod.talkText("調査を開始します。", true);
 					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
 					File.deleteFile(env["RECOGNIZE_RESULT"]);
 					console.log("google " + google_result);
@@ -108,7 +109,7 @@ while(true) {
 				Pod.talkText("はい。なんでしょう。");
 				Pod.run("./3-voice-record.sh");
 				if(File.isExist(env["RECOGNIZE_FILE"])) {
-					Pod.talkText("はい。");
+					Pod.talkText("はい。", true);
 					Pod.run("./4-speech-to-text.sh");
 					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
 					File.deleteFile(env["RECOGNIZE_RESULT"]);
@@ -120,6 +121,7 @@ while(true) {
 						Pod.node("./11-get-weather.js \"" + google_result + "\"");
 					}
 					else if(/って何|とは|の意味/.test(google_result)) {
+						Pod.talkText("調査を開始します。", true);
 						Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
 					}
 					else {
