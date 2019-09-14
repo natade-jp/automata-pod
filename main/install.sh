@@ -11,7 +11,17 @@
 #   mecab-0.996
 #   mecab-ipadic-2.7.0-20070801
 
-
+# 以下のようにRAMディスク化する
+# sudo nano /etc/fstab
+# 以下を追加
+# tmpfs           /tmp            tmpfs   defaults,size=64m,noatime,mode=1777      0       0
+# tmpfs           /var/tmp        tmpfs   defaults,size=16m,noatime,mode=1777      0       0
+# tmpfs           /var/log        tmpfs   defaults,size=32m,noatime,mode=0755      0       0
+# 上書き後、元のフォルダを削除してリブートする
+# sudo rm -rf /tmp
+# sudo rm -rf /var/tmp
+# sudo reboot
+# RAMディスク化することで、作成した音声用データの一時ファイルをRAM上に置き反応速度を上げる
 
 # apt-get を更新
 sudo apt-get -y update
