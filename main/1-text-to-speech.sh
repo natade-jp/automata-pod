@@ -4,11 +4,15 @@
 cd `dirname ${0}`
 MY_PID="$$"
 
-# 自分を含めて2つ起動しているのでやめる
-filepath="${0}"
-if [ 2 -eq `pgrep -cf "/bin/sh ${filepath}"` ] ; then
-	return 1
-fi
+# 再生がすべて終わるまで待つ
+while :
+do
+	soxid=`pgrep -fo sox`
+	if [ ${#soxid} -eq 0 ]; then
+		break
+	fi
+	sleepenh 0.2 > /dev/null
+done
 
 # 合成中
 isMake() {
@@ -128,3 +132,8 @@ done
 
 # ファイルを消去する
 rm ${TALK_FILE}.${MY_PID}.*
+
+# 以下のように直接渡す方法もある、最初にカンマが入った場合は、上記のアルゴリズムのほうが反応が早い。
+# 
+# ヘッダを除去しつつ、パイプで作成した音声データをリアルタイムで再生する
+# echo "${INPUT_TEXT}" | open_jtalk -m "${TALK_HTS}" -x "${TALK_JDIC}" -ow /dev/stdout ${TALK_OPTION} | dd skip=44 2>&1 | sox -r 48000 -c 1 -t s16 - -t ${OUTPUT} ${TALK_EFFECT} > /dev/null 2>&1

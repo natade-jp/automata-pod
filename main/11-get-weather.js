@@ -76,7 +76,8 @@ else {
 	}
 
 	if(target) {
-		const text = itu + "の天気は" + target["天気"] + "、降水確率は" + target["降水確率"] + "%、最低気温は" + target["最低気温"] + "度、最高気温は" + target["最高気温"] + "度になります。";
+		let text = itu + "の天気は" + target["天気"] + "、降水確率は" + target["降水確率"] + "%、最低気温は" + target["最低気温"] + "度、最高気温は" + target["最高気温"] + "度になります。";
+		text = text.replace(/一時雨/g, "一時あめ")
 		Pod.talkText(text);
 	}
 }
