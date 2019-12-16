@@ -63,7 +63,7 @@ while(true) {
 			search: [ /すごいですね/ ], run:(test) => {Pod.talkText("ほめても、何も出ませんよ。");}
 		},
 		{
-			search: [ /かわいいですね/ ], run:(test) => {Pod.talkText("ありがとうございます。心に受け取っておきます。");}
+			search: [ /かわいいですね/ ], run:(test) => {Pod.talkText("ありがとうございます。心に受け止めておきます。");}
 		},
 		{
 			search: [ /じこしょうかい|なまえ/ ], run:(test) => {Pod.talkText("はい。私の名前はポッド。随行支援ユニットです。");}
@@ -78,6 +78,12 @@ while(true) {
 			search: [ /なんにち|なんようび/ ], run:(test) => {
 				Pod.talkText("はい。", true);
 				Pod.node("./10-get-time.js \"" + julius_result + "\"");
+			}
+		},
+		{
+			search: [ /あどれす|あいぴーあどれす/ ], run:(test) => {
+				Pod.talkText("はい。", true);
+				Pod.node("./13-get-ip.js");
 			}
 		},
 		{
