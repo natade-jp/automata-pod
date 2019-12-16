@@ -16,7 +16,7 @@ VOL_MIC="100%"
 # tohoku-f01
 TALK_HTS="/usr/share/hts-voice/tohoku-f01/tohoku-f01-neutral.htsvoice"
 TALK_JDIC="/var/lib/mecab/dic/open-jtalk/naist-jdic"
-TALK_FILE="./text-to-speech.wav"
+TALK_FILE="/tmp/text-to-speech.wav"
 TALK_OPTION="-r 1.05"
 # この辺を参考に声をいじる
 # https://stackoverflow.com/questions/29957719/how-to-make-robot-or-dalek-voice-using-sox-library
@@ -31,10 +31,10 @@ JULIUS_AMGMM="/home/pi/julius/dictation-kit-4.5/am-gmm.jconf"
 JULIUS_GRAM="./dict/main"
 JULIUS_MINSCORE_1GRAM=2500 # 1ワードの最低認識スコア
 JULIUS_MINSCORE_NGRAM=3500 # それ以上の最低認識スコア
-JULIUS_RESULT="speech-to-text.txt"
+JULIUS_RESULT="/tmp/speech-to-text.txt"
 
 # google 音声認識用
-RECOGNIZE_FILE="voice-record.flac"
+RECOGNIZE_FILE="/tmp/voice-record.flac"
 RECOGNIZE_ENCODING="FLAC"
 RECOGNIZE_CHECK_MUON_SEC="0.5"
 RECOGNIZE_REC_MAX_SEC="8"
@@ -45,7 +45,7 @@ RECOGNIZE_LANG="ja-JP"
 # https://console.cloud.google.com/apis/dashboard
 # https://console.cloud.google.com/apis/credentials
 RECOGNIZE_API_KEY="./GOOGLE_APPLICATION_CREDENTIALS.json"
-RECOGNIZE_RESULT="speech-to-text.txt"
+RECOGNIZE_RESULT="/tmp/speech-to-text.txt"
 
 # mecab
 MECAB_RUN="mecab -d /usr/local/lib/mecab/dic/ipadic"

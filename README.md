@@ -28,7 +28,7 @@
 
 ## [MeCab](https://taku910.github.io/mecab/)
 
-形態素解析エンジンです。本プログラムにおいて、Julius用の辞書を作成する際に利用しています。`./main/99-create-dic.js` を用いて、独自形式の辞書(`./main/dict/main.kisoku`)を自動変換しています。
+京大情報学研究科−NTT科学基礎研究所 共同研究ユニットプロジェクトにて開発した形態素解析エンジンです。[BSD,LGPL,GPLのトリプルライセンス](https://taku910.github.io/mecab/)です。本プログラムにおいて、Julius用の辞書を作成する際に利用しています。`./main/99-create-dic.js` を用いて、独自形式の辞書(`./main/dict/main.kisoku`)を自動変換しています。
 
 ## [Open JTalk](http://open-jtalk.sourceforge.net/)
 

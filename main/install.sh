@@ -11,7 +11,17 @@
 #   mecab-0.996
 #   mecab-ipadic-2.7.0-20070801
 
-
+# 以下のようにRAMディスク化する
+# sudo nano /etc/fstab
+# 以下を追加
+# tmpfs           /tmp            tmpfs   defaults,size=64m,noatime,mode=1777      0       0
+# tmpfs           /var/tmp        tmpfs   defaults,size=16m,noatime,mode=1777      0       0
+# tmpfs           /var/log        tmpfs   defaults,size=32m,noatime,mode=0755      0       0
+# 上書き後、元のフォルダを削除してリブートする
+# sudo rm -rf /tmp
+# sudo rm -rf /var/tmp
+# sudo reboot
+# RAMディスク化することで、作成した音声用データの一時ファイルをRAM上に置き反応速度を上げる
 
 # apt-get を更新
 sudo apt-get -y update
@@ -107,3 +117,17 @@ sudo make install
 #
 # crontab に以下を追加してください。
 # 7 * * * * /home/pi/automata-pod/main/21-cron.sh
+
+# CUI化
+# sudo raspi-config
+# 「3 Boot Options」を選択
+# 「B1 Desktop / CLI」を選択
+# 「B2 Console Autologin Text console, automatically logged in as 'pi' user」を選択
+# あとは、Finishで、RebootするとCUIで起動します。
+
+# HDMIを指してもイヤホンジャックから音を強制的に出す
+# sudo raspi-config
+# 「7 Advanced Options」を選択
+# 「A4 Audio」を選択
+# 「1 Force 3.5mm ('headphone') jack」を選択
+# あとは、Finishで、RebootするとCUIで起動します。
