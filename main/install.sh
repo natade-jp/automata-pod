@@ -117,3 +117,17 @@ sudo make install
 #
 # crontab に以下を追加してください。
 # 7 * * * * /home/pi/automata-pod/main/21-cron.sh
+
+# CUI化
+# sudo raspi-config
+# 「3 Boot Options」を選択
+# 「B1 Desktop / CLI」を選択
+# 「B2 Console Autologin Text console, automatically logged in as 'pi' user」を選択
+# あとは、Finishで、RebootするとCUIで起動します。
+
+# HDMIを指してもイヤホンジャックから音を強制的に出す
+# sudo raspi-config
+# 「7 Advanced Options」を選択
+# 「A4 Audio」を選択
+# 「1 Force 3.5mm ('headphone') jack」を選択
+# あとは、Finishで、RebootするとCUIで起動します。

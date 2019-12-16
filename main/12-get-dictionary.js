@@ -36,6 +36,10 @@ if(process.argv.length && process.argv.length >= 3) {
 	if(test) {
 		input_text = test[1];
 	}
+	test = input_text.match(/(.*)は何/);
+	if(test) {
+		input_text = test[1];
+	}
 }
 
 async function main() {

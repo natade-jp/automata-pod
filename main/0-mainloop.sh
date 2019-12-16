@@ -10,8 +10,16 @@ if test $pid != `pgrep -fo "/bin/sh ${filepath}"` ; then
 	return 1
 fi
 
+# 変数を取得
+. ./environment.sh
+
+# ファイルを消去する
+rm ${TALK_FILE}.*
+
+# 最新の情報を取得
 ./21-cron.sh
 
+# スタート
 node ./0-mainloop.js
 
 

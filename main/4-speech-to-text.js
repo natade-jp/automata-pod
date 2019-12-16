@@ -50,6 +50,7 @@ async function main() {
 		.join("\n");
 	
 	console.log(transcription);
+	File.deleteFile(env["RECOGNIZE_FILE"]);
 	File.saveTextFile(env["RECOGNIZE_RESULT"], transcription);
 }
 main().catch(console.error);
