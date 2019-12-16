@@ -2,11 +2,19 @@
 /// <reference path="./node_modules/@types/jquery/index.d.ts" />
 
 const File = require("./lib/File.js");
+const Pod = require("./Pod.js");
 const env = File.getEnvironmentFile("./environment.sh");
 
 const webscrape = require("webscrape");
 // @ts-ignore
 const scraper = webscrape.default();
+
+/**
+ * ネットワークにつながっていないので処理を終了させる
+ */
+if(!Pod.isConnectedInternet()) {
+	process.exit(0);
+}
 
 /**
  * @typedef {Object} 気温データ

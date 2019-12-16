@@ -133,48 +133,58 @@ while(true) {
 		},
 		{
 			search: [ /いみ/ ], run:(test) => {
-				Pod.talkText("どの意味を調べますか。");
-				Pod.run("./3-voice-record.sh");
-				if(File.isExist(env["RECOGNIZE_FILE"])) {
-					Pod.talkText("はい。", true);
-					Pod.run("./4-speech-to-text.sh");
-					Pod.talkText("調査を開始します。", true);
-					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
-					File.deleteFile(env["RECOGNIZE_RESULT"]);
-					console.log("google " + google_result);
-					Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+				if(Pod.isConnectedInternet()) {
+					Pod.talkText("どの意味を調べますか。");
+					Pod.run("./3-voice-record.sh");
+					if(File.isExist(env["RECOGNIZE_FILE"])) {
+						Pod.talkText("はい。", true);
+						Pod.run("./4-speech-to-text.sh");
+						Pod.talkText("調査を開始します。", true);
+						const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+						File.deleteFile(env["RECOGNIZE_RESULT"]);
+						console.log("google " + google_result);
+						Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+					}
+					else {
+						Pod.talkText("声がよく聞こえませんでした。");
+					}
 				}
 				else {
-					Pod.talkText("声がよく聞こえませんでした。");
+					Pod.talkText("すみません。意味を調べたいのですが、外部ネットワークから切り離されており、調査を断念します。");
 				}
 			}
 		},
 		{
 			search: [ /ぽっど|しつもん/ ], run:(test) => {
-				Pod.talkText("はい。なんでしょう。");
-				Pod.run("./3-voice-record.sh");
-				if(File.isExist(env["RECOGNIZE_FILE"])) {
-					Pod.talkText("はい。", true);
-					Pod.run("./4-speech-to-text.sh");
-					const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
-					File.deleteFile(env["RECOGNIZE_RESULT"]);
-					console.log("google " + google_result);
-					if(/時刻|時間|何時/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
-						Pod.node("./10-get-time.js \"" + google_result + "\"");
-					}
-					else if(/天気|気温|温度/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
-						Pod.node("./11-get-weather.js \"" + google_result + "\"");
-					}
-					else if(/って何|とは|の意味/.test(google_result)) {
-						Pod.talkText("調査を開始します。", true);
-						Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+				if(Pod.isConnectedInternet()) {
+					Pod.talkText("はい。なんでしょう。");
+					Pod.run("./3-voice-record.sh");
+					if(File.isExist(env["RECOGNIZE_FILE"])) {
+						Pod.talkText("はい。", true);
+						Pod.run("./4-speech-to-text.sh");
+						const google_result = File.loadTextFile(env["RECOGNIZE_RESULT"]);
+						File.deleteFile(env["RECOGNIZE_RESULT"]);
+						console.log("google " + google_result);
+						if(/時刻|時間|何時/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
+							Pod.node("./10-get-time.js \"" + google_result + "\"");
+						}
+						else if(/天気|気温|温度/.test(google_result) && /今|今日|明日|明後日/.test(google_result)) {
+							Pod.node("./11-get-weather.js \"" + google_result + "\"");
+						}
+						else if(/って何|とは|の意味/.test(google_result)) {
+							Pod.talkText("調査を開始します。", true);
+							Pod.node("./12-get-dictionary.js \"" + google_result + "\"");
+						}
+						else {
+							Pod.talkText("申し訳ございません。理解できませんでした。");
+						}
 					}
 					else {
-						Pod.talkText("申し訳ございません。理解できませんでした。");
+						Pod.talkText("声がよく聞こえませんでした。");
 					}
 				}
 				else {
-					Pod.talkText("声がよく聞こえませんでした。");
+					Pod.talkText("すみません。外部ネットワークから切り離されており、調査を断念します。");
 				}
 			}
 		}
