@@ -5,8 +5,11 @@ DEV_ID_PLAY="0"
 DEV_ID_REC="1"
 
 # ボリューム
-VOL_SPEAKER="85%"
+VOL_SPEAKER="100%"
 VOL_MIC="100%"
+
+# 起動後にネットワークの接続が完了するまで待つ処理
+WAIT_TIME_SEC=10
 
 # open_jtalk用
 # atr503_m001

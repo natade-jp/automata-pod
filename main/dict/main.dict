@@ -8,40 +8,41 @@
 7	[しゃっとだうん]	sh a q t o d a u N
 8	[りぶーと]	r i b u: t o
 9	[あいぴーあどれす]	a i p i: a d o r e s u
-10	[おはようございます]	o h a y o u g o z a i m a s u
-11	[おやすみなさい]	o y a s u m i n a s a i
-12	[おつかれさまです]	o ts u k a r e s a m a d e s u
-13	[すごいですね]	s u g o i d e s u n e
-14	[かわいいですね]	k a w a i i d e s u n e
-15	[じこしょうかいをしてください]	j i k o sh o u k a i o sh i t e k u d a s a i
-16	[じこしょうかいをおねがいします]	j i k o sh o u k a i o o n e g a i sh i m a s u
-17	[なまえをおしえてください]	n a m a e o o sh i e t e k u d a s a i
-18	[の]	n o
-19	[てんき]	t e N k i
-20	[なんにち]	n a N n i ch i
-21	[しつもん]	sh i ts u m o N
-22	[いみ]	i m i
-23	[どういう]	d o u i u
-24	[あどれす]	a d o r e s u
-25	[はい]	h a i
-26	[よろしく]	y o r o sh i k u
-27	[おねがいします]	o n e g a i sh i m a s u
-28	[おねがいいたします]	o n e g a i i t a sh i m a s u
-29	[いいえきょひします]	i i e ky o h i sh i m a s u
-30	[きょひします]	ky o h i sh i m a s u
-31	[いま]	i m a
-32	[きょう]	ky o u
-33	[あした]	a sh i t a
-34	[きおん]	k i o N
-35	[おんど]	o N d o
-36	[をおしえてください]	o o sh i e t e k u d a s a i
-37	[ですか]	d e s u k a
-38	[ぷろせすをしゅうりょう]	p u r o s e s u o sh u u ry o u
-39	[ぷろぐらむをしゅうりょう]	p u r o g u r a m u o sh u u ry o u
-40	[してください]	sh i t e k u d a s a i
-41	[していいですか]	sh i t e i i d e s u k a
-42	[します]	sh i m a s u
-43	[どのような]	d o n o y o u n a
-44	[どんな]	d o N n a
-45	[[s]]	silB
-46	[[/s]]	silE
+10	[ありがとうございます]	a r i g a t o u g o z a i m a s u
+11	[おはようございます]	o h a y o u g o z a i m a s u
+12	[おやすみなさい]	o y a s u m i n a s a i
+13	[おつかれさまです]	o ts u k a r e s a m a d e s u
+14	[すごいですね]	s u g o i d e s u n e
+15	[かわいいですね]	k a w a i i d e s u n e
+16	[じこしょうかいをしてください]	j i k o sh o u k a i o sh i t e k u d a s a i
+17	[じこしょうかいをおねがいします]	j i k o sh o u k a i o o n e g a i sh i m a s u
+18	[なまえをおしえてください]	n a m a e o o sh i e t e k u d a s a i
+19	[の]	n o
+20	[てんき]	t e N k i
+21	[なんにち]	n a N n i ch i
+22	[しつもん]	sh i ts u m o N
+23	[いみ]	i m i
+24	[どういう]	d o u i u
+25	[あどれす]	a d o r e s u
+26	[はい]	h a i
+27	[よろしく]	y o r o sh i k u
+28	[おねがいします]	o n e g a i sh i m a s u
+29	[おねがいいたします]	o n e g a i i t a sh i m a s u
+30	[いいえきょひします]	i i e ky o h i sh i m a s u
+31	[きょひします]	ky o h i sh i m a s u
+32	[いま]	i m a
+33	[きょう]	ky o u
+34	[あした]	a sh i t a
+35	[きおん]	k i o N
+36	[おんど]	o N d o
+37	[をおしえてください]	o o sh i e t e k u d a s a i
+38	[ですか]	d e s u k a
+39	[ぷろせすをしゅうりょう]	p u r o s e s u o sh u u ry o u
+40	[ぷろぐらむをしゅうりょう]	p u r o g u r a m u o sh u u ry o u
+41	[してください]	sh i t e k u d a s a i
+42	[していいですか]	sh i t e i i d e s u k a
+43	[します]	sh i m a s u
+44	[どのような]	d o n o y o u n a
+45	[どんな]	d o N n a
+46	[[s]]	silB
+47	[[/s]]	silE

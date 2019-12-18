@@ -26,7 +26,29 @@ const onWakeVoice = function(target_text, pattern) {
 	}
 };
 
-Pod.talkText("プログラムを開始します。");
+Pod.talkText("電源供給を確認しました。");
+
+{
+	if(!Pod.isConnectedInternet()) {
+		Pod.talkText("外部ネットワークへの接続を試みます。");
+		const wait_time_sec = parseFloat(env["WAIT_TIME_SEC"]);
+		let now_time_sec = 0;
+		for(let now_time_sec = 0; now_time_sec < wait_time_sec; now_time_sec += 0.5) {
+			if(Pod.isConnectedInternet()) {
+				break;
+			}
+			Pod.sleep(0.5);
+		}
+	}
+	if(Pod.isConnectedInternet()) {
+		Pod.talkText("外部ネットワークへの接続が完了しました。");
+	}
+	else {
+		Pod.talkText("スタンドアロンモードで動作開始します。");
+	}
+}
+
+Pod.talkText("対話モードを開始します。");
 
 while(true) {
 	console.log("...");
@@ -61,6 +83,9 @@ while(true) {
 		},
 		{
 			search: [ /すごいですね/ ], run:(test) => {Pod.talkText("ほめても、何も出ませんよ。");}
+		},
+		{
+			search: [ /ありがとうございます/ ], run:(test) => {Pod.talkText("いえいえ、お安い御用です。");}
 		},
 		{
 			search: [ /かわいいですね/ ], run:(test) => {Pod.talkText("ありがとうございます。心に受け止めておきます。");}
