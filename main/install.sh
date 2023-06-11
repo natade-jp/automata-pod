@@ -83,7 +83,7 @@ sudo make install
 
 # julius-kit
 cd ../
-wget https://osdn.net/frs/redir.php?m=rwthaachen&f=julius%2F71011%2Fdictation-kit-4.5.zip
+wget https://ja.osdn.net/projects/julius/downloads/71011/dictation-kit-4.5.zip
 unzip dictation-kit-4.5.zip
 
 # soxの利用
@@ -93,26 +93,31 @@ sudo apt-get install -y alsa-utils sox libsox-fmt-all
 cd ~
 mkdir mecab
 cd mecab
-
-wget -O mecab-0.996.tar.gz "https://drive.google.com/open?id=0B4y35FiV1wh7cENtOXlicTFaRUE&authuser=0"
+FILE_ID=0B4y35FiV1wh7cENtOXlicTFaRUE
+curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" > /dev/null
+CODE="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"  
+curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=${CODE}&id=${FILE_ID}" -o mecab-0.996.tar.gz
 tar xvzf mecab-0.996.tar.gz
 cd mecab-0.996
-./configure --with-charset=utf8 --enable-utf8-only
+./configure --build=aarch64-unknown-linux-gnu --with-charset=utf8 --enable-utf8-only
 make
 make check
 sudo make install
 
 # MeCab 用の辞書 IPA 辞書
 cd ../
-wget -O mecab-ipadic-2.7.0-20070801.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7MWVlSDBCSXZMTXM"
+FILE_ID=0B4y35FiV1wh7MWVlSDBCSXZMTXM
+curl -sc /tmp/cookie "https://drive.google.com/uc?export=download&id=${FILE_ID}" > /dev/null
+CODE="$(awk '/_warning_/ {print $NF}' /tmp/cookie)"  
+curl -Lb /tmp/cookie "https://drive.google.com/uc?export=download&confirm=${CODE}&id=${FILE_ID}" -o mecab-ipadic-2.7.0-20070801.tar.gz
 tar xvzf mecab-ipadic-2.7.0-20070801.tar.gz
 cd mecab-ipadic-2.7.0-20070801
-./configure --with-charset=utf8 --enable-utf8-only
+sudo ldconfig -v 
+./configure --build=aarch64-unknown-linux-gnu --with-charset=utf8 --enable-utf8-only
 make
 sudo make install
 # 以降以下で、実行可能
 # mecab -d /usr/local/lib/mecab/dic/ipadic
-
 
 # スタートアップ及び、定期実行の設定
 #
@@ -132,7 +137,7 @@ sudo make install
 
 # HDMIを指してもイヤホンジャックから音を強制的に出す
 # sudo raspi-config
-# 「7 Advanced Options」を選択
-# 「A4 Audio」を選択
+# 「1 System Options」を選択
+# 「S2 Audio」を選択
 # 「1 Force 3.5mm ('headphone') jack」を選択
 # あとは、Finishで、RebootするとCUIで起動します。
