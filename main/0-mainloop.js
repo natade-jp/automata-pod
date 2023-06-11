@@ -26,11 +26,11 @@ const onWakeVoice = function(target_text, pattern) {
 	}
 };
 
-Pod.talkText("電源供給を確認しました。");
+// Pod.talkText("電源供給を確認しました。");
 
 {
 	if(!Pod.isConnectedInternet()) {
-		Pod.talkText("外部ネットワークへの接続を試みます。");
+//		Pod.talkText("外部ネットワークへの接続を試みます。");
 		const wait_time_sec = parseFloat(env["WAIT_TIME_SEC"]);
 		let now_time_sec = 0;
 		for(let now_time_sec = 0; now_time_sec < wait_time_sec; now_time_sec += 0.5) {
@@ -180,7 +180,7 @@ while(true) {
 			}
 		},
 		{
-			search: [ /ぽっど|しつもん/ ], run:(test) => {
+			search: [ /しつもん/ ], run:(test) => {
 				if(Pod.isConnectedInternet()) {
 					Pod.talkText("はい。なんでしょう。");
 					Pod.run("./3-voice-record.sh");

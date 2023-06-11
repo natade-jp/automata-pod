@@ -22,6 +22,10 @@
 # sudo rm -rf /var/tmp
 # sudo reboot
 # RAMディスク化することで、作成した音声用データの一時ファイルをRAM上に置き反応速度を上げる
+# 
+# automata-pod
+# sudo apt-get install -y git
+# git clone https://github.com/natade-jp/automata-pod
 
 # apt-get を更新
 sudo apt-get -y update
@@ -58,28 +62,28 @@ rm -r ./hts-voice
 # sudo cp -r ./MMDAgent_Example-1.8/Voice/mei/ /usr/share/hts-voice/
 
 # node.js
-curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt-get install -y nodejs
 
 # 必要なパッケージをインストールする
-cd `dirname $0`
+cd ~/automata-pod/main
 npm install
 
 # Julius
 cd ~
-sudo apt-get install -y osspd-alsa libasound2-dev libesd0-dev libsndfile1-dev
+sudo apt-get install -y osspd-alsa libasound2-dev libsndfile1-dev
 mkdir julius
 cd julius
 wget https://github.com/julius-speech/julius/archive/v4.5.tar.gz
 tar xvzf v4.5.tar.gz
 cd julius-4.5
-./configure --with-mictype=alsa
+./configure --build=aarch64-unknown-linux-gnu --with-mictype=alsa
 make
 sudo make install
 
 # julius-kit
 cd ../
-wget https://osdn.net/dl/julius/dictation-kit-4.5.zip
+wget https://osdn.net/frs/redir.php?m=rwthaachen&f=julius%2F71011%2Fdictation-kit-4.5.zip
 unzip dictation-kit-4.5.zip
 
 # soxの利用
@@ -89,7 +93,8 @@ sudo apt-get install -y alsa-utils sox libsox-fmt-all
 cd ~
 mkdir mecab
 cd mecab
-wget -O mecab-0.996.tar.gz "https://drive.google.com/uc?export=download&id=0B4y35FiV1wh7cENtOXlicTFaRUE"
+
+wget -O mecab-0.996.tar.gz "https://drive.google.com/open?id=0B4y35FiV1wh7cENtOXlicTFaRUE&authuser=0"
 tar xvzf mecab-0.996.tar.gz
 cd mecab-0.996
 ./configure --with-charset=utf8 --enable-utf8-only
