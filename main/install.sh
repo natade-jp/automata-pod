@@ -141,3 +141,11 @@ sudo make install
 # 「S2 Audio」を選択
 # 「1 Force 3.5mm ('headphone') jack」を選択
 # あとは、Finishで、RebootするとCUIで起動します。
+
+# CUI 時の日本語表示
+# sudo raspi-config
+# 「5 Localisation Options」を選択
+# 「L1 Locale」を選択
+# 「ja_JP.UTF-8 UTF-8」を選択
+# sudo apt-get install fbterm fonts-ipafont fontconfig
+# 
